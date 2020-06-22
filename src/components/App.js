@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Home from './Home';
 import Login from '../containers/Login';
+import Signup from '../containers/Signup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = props => {
@@ -22,6 +23,9 @@ const App = props => {
         </Route>
         <Route exact path="/">
           <Login />
+        </Route>
+        <Route path="/signup">
+          <Signup />
         </Route>
       </div>
     </Router>

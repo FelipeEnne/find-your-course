@@ -11,4 +11,19 @@ const userLogin = async props => {
   return response.data;
 };
 
-export default userLogin;
+const createUser = async props => {
+  const {
+    name, email, password, confirmation,
+  } = props;
+
+  if (password === confirmation) {
+    const urlUsers = `${url}/users`;
+    const params = `name=${name}&email=${email}&password_digest=${password}&favorite=${''}`;
+
+    const response = await axios.post(`${urlUsers}?${params}`);
+    return response.data;
+  }
+  return null;
+};
+
+export { userLogin, createUser };

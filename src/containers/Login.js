@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 
-import userLogin from '../api/users';
+import { userLogin } from '../api/users';
 
 import { login, currentUser } from '../actions/user';
 
