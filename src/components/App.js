@@ -18,14 +18,14 @@ const App = props => {
   return (
     <Router>
       <div className="App">
-        <Route path="/home">
-          <Home />
-        </Route>
         <Route exact path="/">
           <Login />
         </Route>
         <Route path="/signup">
           <Signup />
+        </Route>
+        <Route path="/home">
+          <Home />
         </Route>
       </div>
     </Router>

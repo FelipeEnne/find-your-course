@@ -34,3 +34,11 @@ code {
   text-align: center;
   margin: 40px 20px;
 }
+
+.signup-link {
+  margin-left: 50px;
+}
+
+.login-link {
+  margin-left: 50px;
+}

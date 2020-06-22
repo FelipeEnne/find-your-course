@@ -33,9 +33,9 @@ const Signup = props => {
     await createUser(userInfo);
 
     return (
-        <div>
-          {history.push('/')}
-        </div>
+      <div>
+        {history.push('/')}
+      </div>
     );
   };
 
@@ -76,6 +76,7 @@ const Signup = props => {
           </label>
         </div>
         <button type="submit" className="btn btn-primary"> Submit</button>
+        <a href="./" className="login-link">Login</a>
       </form>
     </div>
   );
