@@ -12,4 +12,9 @@ const login = user => ({
     user,
   })
 
-  export {login, logout, updateUser};
+  const currentUser = user => ({
+    type: 'CURRENT_USER',
+    user,
+  });
+
+  export {login, logout, updateUser, currentUser};

@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+.login h3{
+  text-align: center;
+  margin: 40px 20px;
+}
