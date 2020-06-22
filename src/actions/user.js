@@ -1,20 +1,22 @@
 const login = user => ({
-    type: 'LOGIN',
-    user,
-  });
-  
-  const logout = () => ({
-    type: 'LOGOUT',
-  });
-  
-  const updateUser = user => ({
-    type: 'UPDATE_USER',
-    user,
-  })
+  type: 'LOGIN',
+  user,
+});
 
-  const currentUser = user => ({
-    type: 'CURRENT_USER',
-    user,
-  });
+const logout = () => ({
+  type: 'LOGOUT',
+});
 
-  export {login, logout, updateUser, currentUser};
+const updateUser = user => ({
+  type: 'UPDATE_USER',
+  user,
+});
+
+const currentUser = user => ({
+  type: 'CURRENT_USER',
+  user,
+});
+
+export {
+  login, logout, updateUser, currentUser,
+};
