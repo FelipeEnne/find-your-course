@@ -50,3 +50,8 @@ code {
 .home nav {
   justify-content: space-around;
 }
+
+.home .body {
+  width: 50%;
+  margin: 50px auto;
+}
