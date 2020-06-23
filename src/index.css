@@ -42,3 +42,11 @@ code {
 .login-link {
   margin-left: 50px;
 }
+
+.home a {
+  color: black;
+}
+
+.home nav {
+  justify-content: space-around;
+}

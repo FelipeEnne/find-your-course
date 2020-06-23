@@ -5,15 +5,15 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Home from './Home';
+import Home from '../containers/Home';
 import Login from '../containers/Login';
 import Signup from '../containers/Signup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = props => {
-  const { user } = props;
+const App = () => {
+  // const { user } = props;
   // eslint-disable-next-line no-console
-  console.log(user);
+  // console.log(user);
 
   return (
     <Router>
@@ -30,12 +30,6 @@ const App = props => {
       </div>
     </Router>
   );
-};
-
-App.propTypes = {
-  user: PropTypes.shape({
-    logged: PropTypes.bool,
-  }).isRequired,
 };
 
 export default App;

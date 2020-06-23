@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import { userLogin } from '../api/users';
-
 import { login, currentUser } from '../actions/user';
-
-import 'react-toastify/dist/ReactToastify.css';
 
 const Login = props => {
   const {
@@ -16,6 +13,16 @@ const Login = props => {
   // console.log(user);
   const [name, setName] = useState();
   const [password, setPassword] = useState();
+
+  const history = useHistory();
+
+  if (user.logged) {
+    return (
+      <div>
+        {history.push('/home')}
+      </div>
+    );
+  }
 
   const handleChange = event => {
     if (event.target.id === 'input-name') {
@@ -50,13 +57,18 @@ const Login = props => {
       localStorage.setItem('localUser', info);
 
       const tempUser = userSigned.filter(usr => usr.id === response.id);
-      if (tempUser.length === 0) currentUser({ id: response.id, name: response.name });
+      if (tempUser.length === 0) {
+        currentUser({
+          id: response.id,
+          name: response.name,
+          favorite: response.favorite,
+        });
+      }
     }
   };
 
   return (
     <div className="login">
-      {user.logged ? <Redirect to="/home" /> : null}
       <h3>Login</h3>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
