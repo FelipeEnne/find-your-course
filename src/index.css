@@ -42,3 +42,48 @@ code {
 .login-link {
   margin-left: 50px;
 }
+
+.home a {
+  color: black;
+}
+
+.home nav {
+  justify-content: space-around;
+}
+
+.home .body {
+  text-shadow: 0.1em 0.1em 0.2em black;
+  width: 50%;
+  margin: 50px auto;
+}
+
+.carousel-item a {
+  color: white;
+  text-decoration: none;
+}
+
+.carousel-item a:hover {
+	text-decoration: none; 
+}
+
+.info a {
+  color: black;
+}
+
+.info nav {
+  justify-content: space-around;
+}
+
+.info .body {
+  color: black;
+  width: 50%;
+  margin: 50px auto;
+}
+
+.info a {
+  text-decoration: none;
+}
+
+.info a:hover {
+  text-decoration: none;
+}

@@ -5,6 +5,7 @@ const userSigned = (state = [], action) => {
         {
           id: action.user.id,
           name: action.user.name,
+          favorite: action.user.favorite,
         },
       ]);
     default:

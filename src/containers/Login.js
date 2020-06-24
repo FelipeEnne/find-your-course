@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
-
+import { useHistory } from 'react-router-dom';
+import { login } from '../actions/user';
 import { userLogin } from '../api/users';
-
-import { login, currentUser } from '../actions/user';
-
-import 'react-toastify/dist/ReactToastify.css';
 
 const Login = props => {
   const {
-    user, loginInfo, userSigned, currentUser,
+    login,
   } = props;
-  // console.log(user);
   const [name, setName] = useState();
   const [password, setPassword] = useState();
+
+  // console.log(props);
+
+  const history = useHistory();
+
+  const localGet = localStorage.getItem('localUser');
+  const localUser = JSON.parse(localGet);
+
+  if (localUser.remember) {
+    return (
+      <div>
+        {history.push('/home')}
+      </div>
+    );
+  }
 
   const handleChange = event => {
     if (event.target.id === 'input-name') {
@@ -32,13 +42,6 @@ const Login = props => {
     // console.log(response);
 
     if (response !== '') {
-      loginInfo({
-        id: response.id,
-        name: response.name,
-        email: response.email,
-        favorite: response.favorite,
-      });
-
       const info = JSON.stringify({
         id: response.id,
         name: response.name,
@@ -49,14 +52,23 @@ const Login = props => {
 
       localStorage.setItem('localUser', info);
 
-      const tempUser = userSigned.filter(usr => usr.id === response.id);
-      if (tempUser.length === 0) currentUser({ id: response.id, name: response.name });
+      login({ id: response.id, name: response.name, email: response.email });
+      return (
+        <div>
+          {history.push('/home')}
+        </div>
+      );
     }
+
+    return (
+      <div>
+        {history.push('/')}
+      </div>
+    );
   };
 
   return (
     <div className="login">
-      {user.logged ? <Redirect to="/home" /> : null}
       <h3>Login</h3>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
@@ -82,19 +94,14 @@ Login.propTypes = {
   user: PropTypes.shape({
     logged: PropTypes.bool,
   }).isRequired,
-  userSigned: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loginInfo: PropTypes.func.isRequired,
-  currentUser: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ user: state.user, userSigned: state.userSigned });
 
 const mapDispatchToProps = dispatch => ({
-  loginInfo: user => {
+  login: user => {
     dispatch(login(user));
-  },
-  currentUser: user => {
-    dispatch(currentUser(user));
   },
 });
 
