@@ -4,19 +4,17 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import { userLogin } from '../api/users';
-import { login, currentUser } from '../actions/user';
 
-const Login = props => {
-  const {
-    user, loginInfo, userSigned, currentUser,
-  } = props;
-  // console.log(user);
+const Login = () => {
   const [name, setName] = useState();
   const [password, setPassword] = useState();
 
   const history = useHistory();
 
-  if (user.logged) {
+  const localGet = localStorage.getItem('localUser');
+  const localUser = JSON.parse(localGet);
+
+  if (localUser.remember) {
     return (
       <div>
         {history.push('/home')}
@@ -39,13 +37,6 @@ const Login = props => {
     // console.log(response);
 
     if (response !== '') {
-      loginInfo({
-        id: response.id,
-        name: response.name,
-        email: response.email,
-        favorite: response.favorite,
-      });
-
       const info = JSON.stringify({
         id: response.id,
         name: response.name,
@@ -56,15 +47,18 @@ const Login = props => {
 
       localStorage.setItem('localUser', info);
 
-      const tempUser = userSigned.filter(usr => usr.id === response.id);
-      if (tempUser.length === 0) {
-        currentUser({
-          id: response.id,
-          name: response.name,
-          favorite: response.favorite,
-        });
-      }
+      return (
+        <div>
+          {history.push('/home')}
+        </div>
+      );
     }
+
+    return (
+      <div>
+        {history.push('/')}
+      </div>
+    );
   };
 
   return (
@@ -94,20 +88,8 @@ Login.propTypes = {
   user: PropTypes.shape({
     logged: PropTypes.bool,
   }).isRequired,
-  userSigned: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loginInfo: PropTypes.func.isRequired,
-  currentUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ user: state.user, userSigned: state.userSigned });
 
-const mapDispatchToProps = dispatch => ({
-  loginInfo: user => {
-    dispatch(login(user));
-  },
-  currentUser: user => {
-    dispatch(currentUser(user));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, null)(Login);

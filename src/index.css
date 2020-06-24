@@ -52,6 +52,7 @@ code {
 }
 
 .home .body {
+  text-shadow: 0.1em 0.1em 0.2em black;
   width: 50%;
   margin: 50px auto;
 }

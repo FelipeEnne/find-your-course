@@ -1,5 +1,5 @@
-const localStr = localStorage.getItem('localUser');
-const localUser = JSON.parse(localStr);
+const localGet = localStorage.getItem('localUser');
+const localUser = JSON.parse(localGet);
 
 let initialState = {};
 

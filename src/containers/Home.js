@@ -19,7 +19,9 @@ import {
 
 const Home = props => {
   const {
-    resp, loading, getCourses,
+    resp,
+    loading,
+    getCourses,
   } = props;
   const history = useHistory();
 
@@ -37,6 +39,8 @@ const Home = props => {
     );
   }
 
+  console.log(props);
+
   const shouldComponentRender = () => {
     if (loading === true || resp.length === 0) return false;
     if (resp === undefined) return false;
@@ -47,6 +51,24 @@ const Home = props => {
     return <Loading />;
   }
 
+  const handleLogout = () => {
+    const info = JSON.stringify({
+      id: 0,
+      name: '',
+      email: '',
+      favorite: '',
+      remember: false,
+    });
+
+    localStorage.setItem('localUser', info);
+
+    return (
+      <div>
+        {history.push('/')}
+      </div>
+    );
+  };
+
   return (
     <div className="home">
       <div className="header">
@@ -56,7 +78,11 @@ const Home = props => {
           </NavDropdown>
 
           <Nav href="#home">Home</Nav>
-          <Nav href="#home">Search</Nav>
+          <Nav href="#home">
+            <button type="button" className="btn btn-link" onClick={handleLogout}>
+              Logout
+            </button>
+          </Nav>
         </Navbar>
       </div>
 
