@@ -22,4 +22,21 @@ function getCourses() {
   };
 }
 
-export default getCourses;
+function getCoursesId(id) {
+  const urlCoursesId = `${url}/courses/${id}`;
+
+  return dispatch => {
+    dispatch(fetchProductsLoading());
+
+    fetch(urlCoursesId)
+      .then(res => res.json())
+      .then(res => {
+        dispatch(fetchProductsSuccess(res));
+      })
+      .catch(error => {
+        dispatch(fetchProductsError(error));
+      });
+  };
+}
+
+export { getCourses, getCoursesId };

@@ -7,29 +7,30 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-import Carousel from 'react-bootstrap/Carousel';
-
-import { getCourses } from '../api/courses';
+import { getCoursesId } from '../api/courses';
 import { logout } from '../actions/user';
 import Loading from '../components/Loading';
 import {
   getProductsLoading,
   getProducts,
-  makeid,
 } from '../helper/index';
 
-const Home = props => {
+const Info = props => {
   const {
     resp,
     loading,
-    getCourses,
+    getCoursesId,
     logout,
+    match,
   } = props;
+
+  // console.log(props);
+  const { id } = match.params;
   const history = useHistory();
 
   useEffect(() => {
-    getCourses();
-  }, [getCourses]);
+    getCoursesId(id);
+  }, [getCoursesId, id]);
 
   const info = JSON.parse(localStorage.localUser);
 
@@ -40,8 +41,6 @@ const Home = props => {
       </div>
     );
   }
-
-  // console.log(props);
 
   const shouldComponentRender = () => {
     if (loading === true || resp.length === 0) return false;
@@ -73,14 +72,13 @@ const Home = props => {
   };
 
   return (
-    <div className="home">
+    <div className="info">
       <div className="header">
         <Navbar bg="light" expand="lg">
           <NavDropdown title="Menu" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Favorite</NavDropdown.Item>
           </NavDropdown>
-
-          <Nav href="#home">Home</Nav>
+          <Nav href="#home"><a href="/">Home</a></Nav>
           <Nav href="#home">
             <button type="button" className="btn btn-link" onClick={handleLogout}>
               Logout
@@ -90,39 +88,30 @@ const Home = props => {
       </div>
 
       <div className="body">
-        <Carousel interval={50000}>
-          {resp.map(res => (
-            <Carousel.Item key={makeid(5)}>
-              <img
-                className="d-block w-100"
-                src={res.image}
-                alt="First slide"
-              />
-              <a href={`/info/${res.id}`}>
-                <Carousel.Caption>
-                  <h3>{res.name}</h3>
-                  <p>
-                    {res.owner}
-                    {' '}
-                    - $
-                    {' '}
-                    {res.value}
-                  </p>
-                </Carousel.Caption>
-              </a>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+        <img
+          className="d-block w-100"
+          src={resp.image}
+          alt="First slide"
+        />
+        <h3>{resp.name}</h3>
+        <p>
+          {resp.owner}
+          {' '}
+          - $
+          {' '}
+          {resp.value}
+        </p>
       </div>
     </div>
   );
 };
 
-Home.propTypes = {
+Info.propTypes = {
   resp: PropTypes.arrayOf(object).isRequired,
-  getCourses: PropTypes.instanceOf(Function).isRequired,
+  getCoursesId: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
+  match: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -132,8 +121,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getCourses,
+  getCoursesId,
   logout,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

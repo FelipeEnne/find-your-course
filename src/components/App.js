@@ -7,6 +7,7 @@ import {
 import Home from '../containers/Home';
 import Login from '../containers/Login';
 import Signup from '../containers/Signup';
+import Info from '../containers/Info';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
       <Route path="/home">
         <Home />
       </Route>
+      <Route path="/info/:id" component={Info} />
     </div>
   </Router>
 );

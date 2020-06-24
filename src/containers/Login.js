@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-
+import { login } from '../actions/user';
 import { userLogin } from '../api/users';
 
-const Login = () => {
+const Login = props => {
+  const {
+    login,
+  } = props;
   const [name, setName] = useState();
   const [password, setPassword] = useState();
+
+  // console.log(props);
 
   const history = useHistory();
 
@@ -47,6 +52,7 @@ const Login = () => {
 
       localStorage.setItem('localUser', info);
 
+      login({ id: response.id, name: response.name, email: response.email });
       return (
         <div>
           {history.push('/home')}
@@ -88,8 +94,15 @@ Login.propTypes = {
   user: PropTypes.shape({
     logged: PropTypes.bool,
   }).isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ user: state.user, userSigned: state.userSigned });
 
-export default connect(mapStateToProps, null)(Login);
+const mapDispatchToProps = dispatch => ({
+  login: user => {
+    dispatch(login(user));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
