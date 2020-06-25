@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const FavoriteTableMobile = ({ fav }) => (
   <tr>
-    <td><a href={`/info/${fav.id}`}>{fav.name}</a></td>
+    <td>
+      <Link to={`/info/${fav.id}`}>{fav.name}</Link>
+    </td>
     <td>
       {' '}
       <img className="favorite-img" src={fav.image} alt={fav.name} />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { login } from '../actions/user';
 import { userLogin } from '../api/users';
 
@@ -84,7 +84,7 @@ const Login = props => {
           </label>
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
-        <a href="./signup" className="signup-link">Signup</a>
+        <Link to="/signup" className="signup-link">Signup</Link>
       </form>
     </div>
   );
