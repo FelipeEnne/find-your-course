@@ -14,6 +14,7 @@ import {
   makeid,
 } from '../helper/index';
 import FavoriteTable from '../components/FavoriteTable';
+import FavoriteTableMobile from '../components/FavoriteTableMobile';
 import Navbarheader from '../components/Navbar';
 
 const Favorite = props => {
@@ -98,7 +99,7 @@ const Favorite = props => {
     <div className="favorite">
       <Navbarheader handleLogout={handleLogout} />
 
-      <div className="favorite-diplay">
+      <div className="favorite-diplay favorite-desktop">
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -112,6 +113,25 @@ const Favorite = props => {
           <tbody>
             {favorites.map(fav => (
               <FavoriteTable
+                key={makeid(5)}
+                fav={fav}
+              />
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <div className="favorite-diplay favorite-mobile">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Image</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {favorites.map(fav => (
+              <FavoriteTableMobile
                 key={makeid(5)}
                 fav={fav}
               />
