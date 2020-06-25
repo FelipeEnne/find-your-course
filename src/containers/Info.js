@@ -26,7 +26,7 @@ const Info = props => {
     match,
   } = props;
 
-  // console.log(props);
+  console.log(props);
   const { id } = match.params;
   const history = useHistory();
 
@@ -91,7 +91,10 @@ const Info = props => {
     return false;
   }
 
+  let buttonFavorite = 'Favorite';
+
   const handleClickFavorite = async () => {
+    buttonFavorite = 'Unfavorite';
     let localGet = localStorage.getItem('localUser');
     let localUser = JSON.parse(localGet);
 
@@ -167,7 +170,7 @@ const Info = props => {
           {resp.description}
         </p>
         <div>
-          <Button onClick={handleClickFavorite} className="button-favorite" variant="primary">Favorite</Button>
+          <Button onClick={handleClickFavorite} className="button-favorite" variant="primary">{buttonFavorite}</Button>
         </div>
       </div>
     </div>
