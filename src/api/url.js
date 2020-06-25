@@ -1,3 +1,3 @@
-const url = 'http://localhost:3002';
+const url = 'https://protected-beyond-23220.herokuapp.com';
 
 export default url;
