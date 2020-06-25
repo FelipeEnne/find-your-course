@@ -6,15 +6,17 @@ import './index.css';
 import App from './components/App';
 import store from './reducers/index';
 
-// const info = JSON.stringify({
-//   id: 0,
-//   name: '',
-//   email: '',
-//   favorite: '',
-//   remember: false,
-// });
+const info = JSON.stringify({
+  id: 0,
+  name: '',
+  email: '',
+  favorite: '',
+  remember: false,
+});
 
-// localStorage.setItem('localUser', info);
+if (localStorage.getItem('localUser') === null) {
+  localStorage.setItem('localUser', info);
+}
 
 ReactDOM.render(
   <Provider store={store}>
