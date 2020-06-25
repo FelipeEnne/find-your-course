@@ -6,7 +6,9 @@ import { useHistory } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 
+import { updateUserFavorite } from '../api/users';
 import { getCoursesId } from '../api/courses';
 import { logout } from '../actions/user';
 import Loading from '../components/Loading';
@@ -24,7 +26,7 @@ const Info = props => {
     match,
   } = props;
 
-  // console.log(props);
+  console.log(props);
   const { id } = match.params;
   const history = useHistory();
 
@@ -71,6 +73,62 @@ const Info = props => {
     );
   };
 
+  function findFavorite(array, name) {
+    for (let i = 0; i < array.length; i += 1) {
+      if (array[i] === name) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function findFavoriteID(array, name) {
+    for (let i = 0; i < array.length; i += 1) {
+      if (array[i] === name) {
+        return array.splice(i, 1);
+      }
+    }
+    return false;
+  }
+
+  let buttonFavorite = 'Favorite';
+
+  const handleClickFavorite = async () => {
+    buttonFavorite = 'Unfavorite';
+    let localGet = localStorage.getItem('localUser');
+    let localUser = JSON.parse(localGet);
+
+    const { name } = resp;
+
+    const favoriteUpdate = localUser.favorite.split(',');
+
+    if (favoriteUpdate[0] === '') {
+      favoriteUpdate[0] = [name];
+    } else if (findFavorite(favoriteUpdate, name)) {
+      findFavoriteID(favoriteUpdate, name);
+    } else {
+      favoriteUpdate.push(name);
+    }
+
+    const infoUpadateFavorite = JSON.stringify({
+      id: info.id,
+      name: info.name,
+      email: info.email,
+      favorite: favoriteUpdate.toString(),
+      remember: true,
+    });
+
+    localStorage.setItem('localUser', infoUpadateFavorite);
+
+    localGet = localStorage.getItem('localUser');
+    localUser = JSON.parse(localGet);
+
+    const favoritePush = localUser.favorite.toString();
+    const idPush = localUser.id;
+
+    await updateUserFavorite({ id: idPush, favorite: favoritePush });
+  };
+
   return (
     <div className="info">
       <div className="header">
@@ -94,13 +152,26 @@ const Info = props => {
           alt="First slide"
         />
         <h3>{resp.name}</h3>
+        <div className="info-body">
+          <div>
+            <p>{resp.owner}</p>
+          </div>
+          <div>
+            <p>
+              $
+              {' '}
+              {resp.value}
+              {' '}
+              per mounth
+            </p>
+          </div>
+        </div>
         <p>
-          {resp.owner}
-          {' '}
-          - $
-          {' '}
-          {resp.value}
+          {resp.description}
         </p>
+        <div>
+          <Button onClick={handleClickFavorite} className="button-favorite" variant="primary">{buttonFavorite}</Button>
+        </div>
       </div>
     </div>
   );

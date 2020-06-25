@@ -87,3 +87,15 @@ code {
 .info a:hover {
   text-decoration: none;
 }
+
+.info-body {
+  display: flex;
+}
+
+.info-body div{
+  margin-right: 50px;
+}
+
+.button-favorite {
+  width: 100%;
+}

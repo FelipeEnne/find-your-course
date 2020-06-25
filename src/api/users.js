@@ -26,4 +26,17 @@ const createUser = async props => {
   return null;
 };
 
-export { userLogin, createUser };
+const updateUserFavorite = async props => {
+  const {
+    id,
+    favorite,
+  } = props;
+
+  const urlUser = `${url}/users/${id}`;
+  const params = `favorite=${favorite}`;
+
+  const response = await axios.patch(`${urlUser}?${params}`);
+  return response.data;
+};
+
+export { userLogin, createUser, updateUserFavorite };
