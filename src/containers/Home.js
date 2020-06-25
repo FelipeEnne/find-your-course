@@ -3,10 +3,6 @@ import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-
 import Carousel from 'react-bootstrap/Carousel';
 
 import { getCourses } from '../api/courses';
@@ -17,6 +13,7 @@ import {
   getProducts,
   makeid,
 } from '../helper/index';
+import Navbarheader from '../components/Navbar';
 
 const Home = props => {
   const {
@@ -74,20 +71,7 @@ const Home = props => {
 
   return (
     <div className="home">
-      <div className="header">
-        <Navbar bg="light" expand="lg">
-          <NavDropdown title="Menu" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Favorite</NavDropdown.Item>
-          </NavDropdown>
-
-          <Nav href="#home">Home</Nav>
-          <Nav href="#home">
-            <button type="button" className="btn btn-link" onClick={handleLogout}>
-              Logout
-            </button>
-          </Nav>
-        </Navbar>
-      </div>
+      <Navbarheader handleLogout={handleLogout} />
 
       <div className="body">
         <Carousel interval={50000}>
@@ -96,7 +80,7 @@ const Home = props => {
               <img
                 className="d-block w-100"
                 src={res.image}
-                alt="First slide"
+                alt={res.name}
               />
               <a href={`/info/${res.id}`}>
                 <Carousel.Caption>

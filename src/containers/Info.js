@@ -1,11 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
 import { updateUserFavorite } from '../api/users';
@@ -16,6 +14,7 @@ import {
   getProductsLoading,
   getProducts,
 } from '../helper/index';
+import Navbarheader from '../components/Navbar';
 
 const Info = props => {
   const {
@@ -26,7 +25,7 @@ const Info = props => {
     match,
   } = props;
 
-  console.log(props);
+  // console.log(props);
   const { id } = match.params;
   const history = useHistory();
 
@@ -131,25 +130,13 @@ const Info = props => {
 
   return (
     <div className="info">
-      <div className="header">
-        <Navbar bg="light" expand="lg">
-          <NavDropdown title="Menu" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Favorite</NavDropdown.Item>
-          </NavDropdown>
-          <Nav href="#home"><a href="/">Home</a></Nav>
-          <Nav href="#home">
-            <button type="button" className="btn btn-link" onClick={handleLogout}>
-              Logout
-            </button>
-          </Nav>
-        </Navbar>
-      </div>
+      <Navbarheader handleLogout={handleLogout} />
 
       <div className="body">
         <img
           className="d-block w-100"
           src={resp.image}
-          alt="First slide"
+          alt={resp.name}
         />
         <h3>{resp.name}</h3>
         <div className="info-body">
@@ -178,7 +165,6 @@ const Info = props => {
 };
 
 Info.propTypes = {
-  resp: PropTypes.arrayOf(object).isRequired,
   getCoursesId: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,

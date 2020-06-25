@@ -83,7 +83,7 @@ const Login = props => {
             <input id="input-password" type="password" onChange={handleChange} className="form-control" />
           </label>
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Login</button>
         <a href="./signup" className="signup-link">Signup</a>
       </form>
     </div>

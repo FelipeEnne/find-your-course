@@ -43,12 +43,16 @@ code {
   margin-left: 50px;
 }
 
-.home a {
+.App a {
   color: black;
 }
 
-.home nav {
+.App nav {
   justify-content: space-around;
+}
+
+.App a:hover {
+  text-decoration: none;
 }
 
 .home .body {
@@ -66,26 +70,10 @@ code {
 	text-decoration: none; 
 }
 
-.info a {
-  color: black;
-}
-
-.info nav {
-  justify-content: space-around;
-}
-
 .info .body {
   color: black;
   width: 50%;
   margin: 50px auto;
-}
-
-.info a {
-  text-decoration: none;
-}
-
-.info a:hover {
-  text-decoration: none;
 }
 
 .info-body {
@@ -98,4 +86,54 @@ code {
 
 .button-favorite {
   width: 100%;
+}
+
+.favorite table {
+  text-align: center;
+  margin: 30px auto;
+  width: 80%;
+}
+
+.favorite td {
+  vertical-align: middle!important;
+}
+
+.favorite img {
+  height: 70px;
+}
+
+.favorite-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .home .body {
+    width: 80%;
+  }
+
+  .info .body {
+    width: 80%;
+  }
+
+  .favorite-desktop {
+    display: none;
+  }
+
+  .favorite-mobile {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .home .body {
+    width: 100%;
+  }
+
+  .info .body {
+    width: 100%;
+  }
+
+  .favorite table {
+    width: 100%;
+  }
 }
