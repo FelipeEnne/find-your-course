@@ -68,6 +68,7 @@ code {
 
 .info a {
   color: black;
+  text-decoration: none;
 }
 
 .info nav {
@@ -78,10 +79,6 @@ code {
   color: black;
   width: 50%;
   margin: 50px auto;
-}
-
-.info a {
-  text-decoration: none;
 }
 
 .info a:hover {
@@ -98,4 +95,31 @@ code {
 
 .button-favorite {
   width: 100%;
+}
+
+
+.favorite a {
+  color: black;
+}
+
+.favorite a:hover {
+  text-decoration: none;
+}
+
+.favorite nav {
+  justify-content: space-around;
+}
+
+.favorite table {
+  text-align: center;
+  margin: 30px auto;
+  width: 80%;
+}
+
+.favorite td {
+  vertical-align: middle!important;
+}
+
+.favorite img {
+  height: 70px;
 }

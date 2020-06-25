@@ -3,7 +3,7 @@ import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import Carousel from 'react-bootstrap/Carousel';
+import Table from 'react-bootstrap/Table';
 
 import { getCourses } from '../api/courses';
 import { logout } from '../actions/user';
@@ -13,15 +13,17 @@ import {
   getProducts,
   makeid,
 } from '../helper/index';
+import FavoriteTable from '../components/FavoriteTable';
 import Navbarheader from '../components/Navbar';
 
-const Home = props => {
+const Favorite = props => {
   const {
     resp,
     loading,
     getCourses,
     logout,
   } = props;
+
   const history = useHistory();
 
   useEffect(() => {
@@ -37,8 +39,6 @@ const Home = props => {
       </div>
     );
   }
-
-  // console.log(props);
 
   const shouldComponentRender = () => {
     if (loading === true || resp.length === 0) return false;
@@ -69,40 +69,61 @@ const Home = props => {
     );
   };
 
+  const getFavorites = () => {
+    const localGet = localStorage.getItem('localUser');
+    const localUser = JSON.parse(localGet);
+
+    const favorites = localUser.favorite.split(',');
+
+    return favorites;
+  };
+
+  const getFavoritesInfo = () => {
+    const fav = getFavorites();
+    const infoFav = [];
+
+    for (let i = 0; i < resp.length; i += 1) {
+      for (let j = 0; j < fav.length; j += 1) {
+        if (resp[i].name === fav[j]) {
+          infoFav.push(resp[i]);
+        }
+      }
+    }
+    return infoFav;
+  };
+
+  const favorites = getFavoritesInfo();
+
   return (
-    <div className="home">
+    <div className="favorite">
       <Navbarheader handleLogout={handleLogout} />
 
-      <div className="body">
-        <Carousel interval={50000}>
-          {resp.map(res => (
-            <Carousel.Item key={makeid(5)}>
-              <img
-                className="d-block w-100"
-                src={res.image}
-                alt={res.name}
+      <div className="favorite-diplay">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Image</th>
+              <th>Owner</th>
+              <th>Value</th>
+              <th>Stars</th>
+            </tr>
+          </thead>
+          <tbody>
+            {favorites.map(fav => (
+              <FavoriteTable
+                key={makeid(5)}
+                fav={fav}
               />
-              <a href={`/info/${res.id}`}>
-                <Carousel.Caption>
-                  <h3>{res.name}</h3>
-                  <p>
-                    {res.owner}
-                    {' '}
-                    - $
-                    {' '}
-                    {res.value}
-                  </p>
-                </Carousel.Caption>
-              </a>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </div>
   );
 };
 
-Home.propTypes = {
+Favorite.propTypes = {
   resp: PropTypes.arrayOf(object).isRequired,
   getCourses: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
@@ -120,4 +141,4 @@ const mapDispatchToProps = {
   logout,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorite);
