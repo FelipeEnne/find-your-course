@@ -15,7 +15,7 @@ const Navbarheader = ({ handleLogout }) => (
         </NavDropdown.Item>
       </NavDropdown>
       <Nav>
-        <Link to="/home">Favorite</Link>
+        <Link to="/home">Home</Link>
       </Nav>
       <Nav>
         <button type="button" className="btn btn-link" onClick={handleLogout}>

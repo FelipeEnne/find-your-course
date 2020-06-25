@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory,Link } from 'react-router-dom';
 
 import Carousel from 'react-bootstrap/Carousel';
 
@@ -82,7 +82,7 @@ const Home = props => {
                 src={res.image}
                 alt={res.name}
               />
-              <a href={`/info/${res.id}`}>
+              <Link to={`/info/${res.id}`}>
                 <Carousel.Caption>
                   <h3>{res.name}</h3>
                   <p>
@@ -93,7 +93,7 @@ const Home = props => {
                     {res.value}
                   </p>
                 </Carousel.Caption>
-              </a>
+              </Link>
             </Carousel.Item>
           ))}
         </Carousel>
