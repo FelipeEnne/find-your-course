@@ -101,6 +101,48 @@ code {
   text-align: center;
 }
 
+.burger-header {
+  width: 25px;
+  height: 23px;
+  filter: opacity(0.5);
+}
+
+.burger-header {
+  width: 25px;
+  height: 23px;
+  filter: opacity(0.5);
+}
+
+.search-header {
+  width: 33px;
+  height: 35px;
+  filter: opacity(0.5);
+}
+
+.input-filter {
+  border-radius: 1rem!important;
+  height: 30px;
+  width: 150px;
+}
+
+.input-filter:disabled {
+  border-radius: 1rem!important;
+  height: 30px;
+  width: 150px;
+}
+
+.header-burger {
+  width: 150px;
+}
+
+
+.dropdown-toggle::after {
+  content: none!important;
+}
+
+.btn-link:hover {
+  text-decoration: none!important;
+}
 
 .login-link {
   margin-left: 50px;
