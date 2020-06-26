@@ -15,6 +15,12 @@ const coursesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        resps: action.resps,
+      };
+    case 'FETCH_PRODUCT_SUCCESS':
+      return {
+        ...state,
+        loading: false,
         resp: action.resp,
       };
     case 'FETCH_PRODUCTS_ERROR':

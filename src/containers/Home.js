@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ import Navbarheader from '../components/Navbar';
 
 const Home = props => {
   const {
-    resp,
+    resps,
     loading,
     getCourses,
     logout,
@@ -41,8 +42,8 @@ const Home = props => {
   // console.log(props);
 
   const shouldComponentRender = () => {
-    if (loading === true || resp.length === 0) return false;
-    if (resp === undefined) return false;
+    if (resps === undefined) return false;
+    if (loading === true || resps.length === 0) return false;
     return true;
   };
 
@@ -75,7 +76,7 @@ const Home = props => {
 
       <div className="body">
         <Carousel interval={50000}>
-          {resp.map(res => (
+          {resps.map(res => (
             <Carousel.Item key={makeid(5)}>
               <img
                 className="d-block w-100"
@@ -103,7 +104,6 @@ const Home = props => {
 };
 
 Home.propTypes = {
-  resp: PropTypes.arrayOf(object).isRequired,
   getCourses: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
@@ -112,7 +112,7 @@ Home.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   loading: getProductsLoading(state.courses),
-  resp: getProducts(state.courses),
+  resps: getProducts(state.courses),
 });
 
 const mapDispatchToProps = {

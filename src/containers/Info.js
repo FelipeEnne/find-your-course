@@ -12,9 +12,10 @@ import { logout } from '../actions/user';
 import Loading from '../components/Loading';
 import {
   getProductsLoading,
-  getProducts,
+  getProduct,
 } from '../helper/index';
-import Navbarheader from '../components/Navbar';
+
+import NavbarheaderInfo from '../components/NavbarInfo';
 
 const Info = props => {
   const {
@@ -130,7 +131,7 @@ const Info = props => {
 
   return (
     <div className="info">
-      <Navbarheader handleLogout={handleLogout} />
+      <NavbarheaderInfo handleLogout={handleLogout} />
 
       <div className="body">
         <img
@@ -174,7 +175,7 @@ Info.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   loading: getProductsLoading(state.courses),
-  resp: getProducts(state.courses),
+  resp: getProduct(state.courses),
 });
 
 const mapDispatchToProps = {

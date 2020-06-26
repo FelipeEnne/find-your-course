@@ -3,4 +3,9 @@ const getCoursesAction = courses => ({
   courses,
 });
 
-export default getCoursesAction;
+const getCourseAction = course => ({
+  type: 'COURSE',
+  course,
+});
+
+export { getCoursesAction, getCourseAction };
