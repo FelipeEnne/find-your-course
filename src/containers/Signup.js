@@ -49,34 +49,35 @@ const Signup = props => {
 
   return (
     <div className="signup">
+      <div className="background" />
       <h3>Signup</h3>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <label htmlFor="Name">
             Name
-            <input id="input-name" type="text" onChange={handleChange} className="form-control" />
+            <input id="input-name" type="text" onChange={handleChange} className="form-control input-default" />
           </label>
         </div>
         <div className="form-group">
           <label htmlFor="email">
             Email
-            <input id="input-email" type="email" onChange={handleChange} className="form-control" />
+            <input id="input-email" type="email" onChange={handleChange} className="form-control input-default" />
           </label>
         </div>
         <div className="form-group">
           <label htmlFor="password">
             Password
-            <input id="input-password" type="password" onChange={handleChange} className="form-control" />
+            <input id="input-password" type="password" onChange={handleChange} className="form-control input-default" />
           </label>
         </div>
         <div className="form-group">
           <label htmlFor="password">
             Password confirmation
-            <input id="input-confirmation" type="password" onChange={handleChange} className="form-control" />
+            <input id="input-confirmation" type="password" onChange={handleChange} className="form-control input-default" />
           </label>
         </div>
-        <button type="submit" className="btn btn-primary"> Submit</button>
-        <Link to="/" className="login-link">Login</Link>
+        <button type="submit" className="btn-default"> Submit</button>
+        <Link to="/" className="link-default">Login</Link>
       </form>
     </div>
   );

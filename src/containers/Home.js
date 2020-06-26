@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory,Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import Carousel from 'react-bootstrap/Carousel';
 
