@@ -3,6 +3,7 @@ import {
   fetchProductsError,
   fetchProductsLoading,
   fetchProductsSuccess,
+  fetchProductSuccess,
 } from '../actions/loader';
 
 const urlCourses = `${url}/courses`;
@@ -31,7 +32,7 @@ function getCoursesId(id) {
     fetch(urlCoursesId)
       .then(res => res.json())
       .then(res => {
-        dispatch(fetchProductsSuccess(res));
+        dispatch(fetchProductSuccess(res));
       })
       .catch(error => {
         dispatch(fetchProductsError(error));

@@ -1,9 +1,14 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory,Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
-import Carousel from 'react-bootstrap/Carousel';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
+
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 import { getCourses } from '../api/courses';
 import { logout } from '../actions/user';
@@ -17,7 +22,7 @@ import Navbarheader from '../components/Navbar';
 
 const Home = props => {
   const {
-    resp,
+    resps,
     loading,
     getCourses,
     logout,
@@ -41,8 +46,8 @@ const Home = props => {
   // console.log(props);
 
   const shouldComponentRender = () => {
-    if (loading === true || resp.length === 0) return false;
-    if (resp === undefined) return false;
+    if (resps === undefined) return false;
+    if (loading === true || resps.length === 0) return false;
     return true;
   };
 
@@ -69,32 +74,102 @@ const Home = props => {
     );
   };
 
+  const responsive = {
+    desktop: {
+      breakpoint: {
+        max: 3000,
+        min: 999,
+      },
+      items: 2,
+      partialVisibilityGutter: 40,
+    },
+    mobile: {
+      breakpoint: {
+        max: 464,
+        min: 0,
+      },
+      items: 1,
+      partialVisibilityGutter: 30,
+    },
+    tablet: {
+      breakpoint: {
+        max: 999,
+        min: 464,
+      },
+      items: 1,
+      partialVisibilityGutter: 100,
+    },
+  };
+
   return (
     <div className="home">
       <Navbarheader handleLogout={handleLogout} />
 
       <div className="body">
-        <Carousel interval={50000}>
-          {resp.map(res => (
-            <Carousel.Item key={makeid(5)}>
+        <Carousel
+          additionalTransfrom={0}
+          arrows
+          autoPlaySpeed={30000}
+          centerMode={false}
+          className=""
+          containerClass="container"
+          dotListClass=""
+          draggable
+          focusOnSelect={false}
+          infinite
+          itemClass=""
+          keyBoardControl
+          minimumTouchDrag={80}
+          partialVisible
+          renderButtonGroupOutside={false}
+          renderDotsOutside={false}
+          responsive={responsive}
+          showDots={false}
+          sliderClass=""
+          slidesToSlide={1}
+          swipeable
+        >
+          {resps.map(res => (
+            <div key={makeid(5)} className="carrosel-div">
               <img
                 className="d-block w-100"
                 src={res.image}
                 alt={res.name}
               />
               <Link to={`/info/${res.id}`}>
-                <Carousel.Caption>
-                  <h3>{res.name}</h3>
-                  <p>
-                    {res.owner}
-                    {' '}
-                    - $
-                    {' '}
-                    {res.value}
-                  </p>
-                </Carousel.Caption>
+                <div className="carrosel-content">
+                  <div className="display-flex">
+                    <div><h5>{res.name}</h5></div>
+                    <div className="money-value">
+                      <h6>
+                        $
+                        {' '}
+                        {res.value}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="display-flex">
+                    <div>
+                      <Rater
+                        total={5}
+                        rating={res.starts}
+                        interactive={false}
+                      />
+                    </div>
+                    <div className="money-date">
+                      <p>
+                        per Mounth
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </Link>
-            </Carousel.Item>
+              <div className="carrosel-id">
+                {res.id}
+                /
+                {resps.length}
+              </div>
+            </div>
           ))}
         </Carousel>
       </div>
@@ -103,7 +178,6 @@ const Home = props => {
 };
 
 Home.propTypes = {
-  resp: PropTypes.arrayOf(object).isRequired,
   getCourses: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
@@ -112,7 +186,7 @@ Home.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   loading: getProductsLoading(state.courses),
-  resp: getProducts(state.courses),
+  resps: getProducts(state.courses),
 });
 
 const mapDispatchToProps = {

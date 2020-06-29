@@ -1,6 +1,8 @@
 export const getProductsError = state => state.error;
 export const getProductsLoading = state => state.loading;
-export const getProducts = state => state.resp;
+export const getProductLoading = state => state.loading;
+export const getProducts = state => state.resps;
+export const getProduct = state => state.resp;
 
 export function makeid(length) {
   let result = '';

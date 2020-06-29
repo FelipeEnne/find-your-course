@@ -2,8 +2,13 @@ const fetchProductsLoading = () => ({
   type: 'FETCH_PRODUCTS_LOADING',
 });
 
-const fetchProductsSuccess = resp => ({
+const fetchProductsSuccess = resps => ({
   type: 'FETCH_PRODUCTS_SUCCESS',
+  resps,
+});
+
+const fetchProductSuccess = resp => ({
+  type: 'FETCH_PRODUCT_SUCCESS',
   resp,
 });
 
@@ -16,4 +21,5 @@ export {
   fetchProductsError,
   fetchProductsLoading,
   fetchProductsSuccess,
+  fetchProductSuccess,
 };
