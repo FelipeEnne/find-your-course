@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import Button from 'react-bootstrap/Button';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
 
 import { updateUserFavorite } from '../api/users';
 import { getCoursesId } from '../api/courses';
-import { logout } from '../actions/user';
 import Loading from '../components/Loading';
 import {
   getProductsLoading,
@@ -22,7 +22,6 @@ const Info = props => {
     resp,
     loading,
     getCoursesId,
-    logout,
     match,
   } = props;
 
@@ -53,25 +52,6 @@ const Info = props => {
   if (!shouldComponentRender()) {
     return <Loading />;
   }
-
-  const handleLogout = () => {
-    logout();
-    const info = JSON.stringify({
-      id: 0,
-      name: '',
-      email: '',
-      favorite: '',
-      remember: false,
-    });
-
-    localStorage.setItem('localUser', info);
-
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
-  };
 
   function findFavorite(array, name) {
     for (let i = 0; i < array.length; i += 1) {
@@ -131,7 +111,7 @@ const Info = props => {
 
   return (
     <div className="info">
-      <NavbarheaderInfo handleLogout={handleLogout} />
+      <NavbarheaderInfo name={resp.name} />
 
       <div className="body">
         <img
@@ -139,26 +119,44 @@ const Info = props => {
           src={resp.image}
           alt={resp.name}
         />
-        <h3>{resp.name}</h3>
-        <div className="info-body">
-          <div>
-            <p>{resp.owner}</p>
+        <div className="display-flex info-inside">
+
+          <div className="text-info-inside display-flex">
+            <img
+              className="image-info-inside"
+              src={resp.image}
+              alt={resp.name}
+            />
+            <div className="div-info-inside">
+              <h3>{resp.owner}</h3>
+              <Rater
+                total={5}
+                rating={resp.starts}
+                interactive={false}
+              />
+            </div>
           </div>
-          <div>
-            <p>
+
+          <div className="text-info-inside div-info-inside">
+            <h3 className="text-info-inside-value">
               $
               {' '}
               {resp.value}
-              {' '}
-              per mounth
-            </p>
+            </h3>
+            <p className="display-none-mobile">per mounth</p>
           </div>
+
         </div>
-        <p>
-          {resp.description}
-        </p>
+        <div className="info-description">
+          <h4>About the course</h4>
+          <p>
+            {resp.description}
+          </p>
+        </div>
         <div>
-          <Button onClick={handleClickFavorite} className="button-favorite" variant="primary">{buttonFavorite}</Button>
+          <button type="button" onClick={handleClickFavorite} className="button-favorite">
+            {buttonFavorite}
+          </button>
         </div>
       </div>
     </div>
@@ -168,7 +166,6 @@ const Info = props => {
 Info.propTypes = {
   getCoursesId: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
 };
 
@@ -180,7 +177,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getCoursesId,
-  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Info);

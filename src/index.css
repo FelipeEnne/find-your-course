@@ -191,6 +191,10 @@ code {
 
 .button-favorite {
   width: 100%;
+  border: solid;
+  color: white;
+  background-color: #ff6a00;
+  border-color: #ff6a00;
 }
 
 .favorite table {
@@ -209,6 +213,49 @@ code {
 
 .favorite-mobile {
   display: none;
+}
+
+.header-arrow-img img{
+  margin-right: 150px;
+  width: 25px!important;
+  border: solid 1px;
+}
+
+.image-info-inside {
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 15px;
+  border: solid 1px;
+}
+
+.text-info-inside h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0px;
+  font-weight: bolder;
+}
+
+.div-info-inside {
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+.text-info-inside-value {
+  text-align: right;
+}
+
+.info-inside {
+  position: relative;
+  color: #ffffff;
+  bottom: 90px;
+  width: 98%;
+  text-shadow: 2px 2px 4px #000000;
+}
+.info-description {
+  margin-top: -60px;
+}
+
+.info-description h4 {
+  margin: 16px 0px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -236,6 +283,10 @@ code {
     width: 50px!important;
   }
 
+  .header-arrow-img img{
+    margin-right: 0px;
+  }
+
   .input-filter:disabled {
     display: none;
   }
@@ -255,6 +306,13 @@ code {
   }
 }
 
+.display-none-mobile {
+  display: none;
+}
+
+.text-info-inside h3 {
+  font-size: 1rem;
+}
 
 .carousel-indicators {
   bottom: -55px!important;
@@ -323,7 +381,7 @@ code {
 .carrosel-id {
   position: absolute;
   padding-top: 19px;
-  font-size: 2rem;
+  font-size: 1.25rem;
   text-align: center;
   width: 100%;
 }
@@ -389,3 +447,4 @@ code {
     font-size: 1rem;
   }
 }
+

@@ -2,30 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 
-const NavbarheaderInfo = ({ handleLogout }) => (
+const NavbarheaderInfo = ({ name }) => (
   <div className="header">
     <Navbar bg="light" expand="lg">
-      <div className="header-burger">
-        <NavDropdown title={<img src="../img/burger.png" alt="menu" className="burger-header" />} id="nav-dropdown">
-          <NavDropdown.Item>
-            <Link to="/favorite">Favorite</Link>
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">
-            <button type="button" className="btn btn-link" onClick={handleLogout}>
-              Logout
-            </button>
-          </NavDropdown.Item>
-        </NavDropdown>
+      <div className="header-div">
+        <Nav>
+          <Link to="/home" className="header-arrow-img">
+            <img src="/img/arrowl.png" alt="arrowl" />
+          </Link>
+        </Nav>
       </div>
       <div className="header-div">
         <Nav>
-          <Link to="/home">Home</Link>
+          <Link to="/home">{name}</Link>
         </Nav>
       </div>
       <div className="header-div">
@@ -39,7 +32,7 @@ const NavbarheaderInfo = ({ handleLogout }) => (
 );
 
 NavbarheaderInfo.propTypes = {
-  handleLogout: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default NavbarheaderInfo;
