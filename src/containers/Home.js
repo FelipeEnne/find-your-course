@@ -78,10 +78,10 @@ const Home = props => {
     desktop: {
       breakpoint: {
         max: 3000,
-        min: 1024,
+        min: 999,
       },
-      items: 1,
-      partialVisibilityGutter: 300,
+      items: 2,
+      partialVisibilityGutter: 40,
     },
     mobile: {
       breakpoint: {
@@ -89,11 +89,11 @@ const Home = props => {
         min: 0,
       },
       items: 1,
-      partialVisibilityGutter: 20,
+      partialVisibilityGutter: 30,
     },
     tablet: {
       breakpoint: {
-        max: 1024,
+        max: 999,
         min: 464,
       },
       items: 1,

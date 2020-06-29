@@ -40,6 +40,8 @@ body {
   height:100%;
   top:0px;
   left:0px;
+  height: inherit;
+  overflow-x: scroll;
 }
 
 code {
@@ -161,7 +163,6 @@ code {
 }
 
 .home .body {
-  width: 90%;
   margin: 50px auto;
 }
 
@@ -303,16 +304,16 @@ code {
 
 .money-date  p{
   color: gray;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .react-rater-star.is-active {
   color:#ffcc34!important;
-  font-size: 35px;
+  font-size: 20px;
 }
 
 .react-rater-star.is-disabled {
-  font-size: 35px;
+  font-size: 20px;
 }
 
 .carousel-inner {
@@ -334,6 +335,10 @@ code {
   box-shadow: 9px 14px 38px -13px rgba(0,0,0,0.75)!important;
 }
 
+.carrosel-div img {
+  border-bottom: solid 0.5px;
+}
+
 .carrosel-content {
   margin: 20px;
 }
@@ -345,67 +350,17 @@ code {
 .react-multi-carousel-item {
   opacity: 0.7;
   padding-bottom: 80px;
+  width: 500px;
 }
 
 .react-multi-carousel-item h5{
-  font-size: 3rem;
+  font-size: 1.75rem;
 }
 
 .react-multi-carousel-item h6{
-  font-size: 2.25rem;
+  font-size: 1.5rem;
 }
 
-@media only screen and (max-width: 1024px) {
-  .react-multi-carousel-item h5{
-    font-size: 2rem;
-  }
-  
-  .react-multi-carousel-item h6{
-    font-size: 1.75rem;
-  }
-
-  .money-date  p{
-    color: gray;
-    font-size: 1.25rem;
-  }
-  
-  .react-rater-star.is-active {
-    color:#ffcc34!important;
-    font-size: 30px;
-  }
-  
-  .react-rater-star.is-disabled {
-    font-size: 30px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .react-multi-carousel-item h5{
-    font-size: 1.5rem;
-  }
-  
-  .react-multi-carousel-item h6{
-    font-size: 1.25rem;
-  }
-
-  .money-date  p{
-    color: gray;
-    font-size: 1rem;
-  }
-  
-  .react-rater-star.is-active {
-    color:#ffcc34!important;
-    font-size: 20px;
-  }
-  
-  .react-rater-star.is-disabled {
-    font-size: 20px;
-  }
-
-  .carrosel-id {
-    font-size: 1.5rem;
-  }
-}
 
 @media only screen and (max-width: 425px) {
   .react-multi-carousel-item h5{
