@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
-import Carousel from 'react-bootstrap/Carousel';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
+
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 import { getCourses } from '../api/courses';
 import { logout } from '../actions/user';
@@ -70,32 +74,102 @@ const Home = props => {
     );
   };
 
+  const responsive = {
+    desktop: {
+      breakpoint: {
+        max: 3000,
+        min: 1024,
+      },
+      items: 1,
+      partialVisibilityGutter: 300,
+    },
+    mobile: {
+      breakpoint: {
+        max: 464,
+        min: 0,
+      },
+      items: 1,
+      partialVisibilityGutter: 20,
+    },
+    tablet: {
+      breakpoint: {
+        max: 1024,
+        min: 464,
+      },
+      items: 1,
+      partialVisibilityGutter: 100,
+    },
+  };
+
   return (
     <div className="home">
       <Navbarheader handleLogout={handleLogout} />
 
       <div className="body">
-        <Carousel interval={50000}>
+        <Carousel
+          additionalTransfrom={0}
+          arrows
+          autoPlaySpeed={30000}
+          centerMode={false}
+          className=""
+          containerClass="container"
+          dotListClass=""
+          draggable
+          focusOnSelect={false}
+          infinite
+          itemClass=""
+          keyBoardControl
+          minimumTouchDrag={80}
+          partialVisible
+          renderButtonGroupOutside={false}
+          renderDotsOutside={false}
+          responsive={responsive}
+          showDots={false}
+          sliderClass=""
+          slidesToSlide={1}
+          swipeable
+        >
           {resps.map(res => (
-            <Carousel.Item key={makeid(5)}>
+            <div key={makeid(5)} className="carrosel-div">
               <img
                 className="d-block w-100"
                 src={res.image}
                 alt={res.name}
               />
               <Link to={`/info/${res.id}`}>
-                <Carousel.Caption>
-                  <h3>{res.name}</h3>
-                  <p>
-                    {res.owner}
-                    {' '}
-                    - $
-                    {' '}
-                    {res.value}
-                  </p>
-                </Carousel.Caption>
+                <div className="carrosel-content">
+                  <div className="display-flex">
+                    <div><h5>{res.name}</h5></div>
+                    <div className="money-value">
+                      <h6>
+                        $
+                        {' '}
+                        {res.value}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="display-flex">
+                    <div>
+                      <Rater
+                        total={5}
+                        rating={res.starts}
+                        interactive={false}
+                      />
+                    </div>
+                    <div className="money-date">
+                      <p>
+                        per Mounth
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </Link>
-            </Carousel.Item>
+              <div className="carrosel-id">
+                {res.id}
+                /
+                {resps.length}
+              </div>
+            </div>
           ))}
         </Carousel>
       </div>

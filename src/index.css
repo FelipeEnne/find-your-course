@@ -161,7 +161,7 @@ code {
 }
 
 .home .body {
-  width: 50%;
+  width: 90%;
   margin: 50px auto;
 }
 
@@ -289,4 +289,148 @@ code {
 
 .carousel-item {
   padding-bottom: 140px!important;
+}
+
+.display-flex {
+  display: flex!important;
+  
+  justify-content: space-between;
+}
+
+.money-value {
+  align-items: center!important;
+}
+
+.money-date  p{
+  color: gray;
+  font-size: 1.5rem;
+}
+
+.react-rater-star.is-active {
+  color:#ffcc34!important;
+  font-size: 35px;
+}
+
+.react-rater-star.is-disabled {
+  font-size: 35px;
+}
+
+.carousel-inner {
+  overflow: unset!important;
+}
+
+.carrosel-id {
+  position: absolute;
+  padding-top: 19px;
+  font-size: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.carrosel-div {
+  margin: 20px;
+  -webkit-box-shadow: 9px 14px 38px -13px rgba(0,0,0,0.75)!important;
+  -moz-box-shadow: 9px 14px 38px -13px rgba(0,0,0,0.75)!important;
+  box-shadow: 9px 14px 38px -13px rgba(0,0,0,0.75)!important;
+}
+
+.carrosel-content {
+  margin: 20px;
+}
+
+.react-multi-carousel-item--active {
+  opacity: 1!important;
+}
+
+.react-multi-carousel-item {
+  opacity: 0.7;
+  padding-bottom: 80px;
+}
+
+.react-multi-carousel-item h5{
+  font-size: 3rem;
+}
+
+.react-multi-carousel-item h6{
+  font-size: 2.25rem;
+}
+
+@media only screen and (max-width: 1024px) {
+  .react-multi-carousel-item h5{
+    font-size: 2rem;
+  }
+  
+  .react-multi-carousel-item h6{
+    font-size: 1.75rem;
+  }
+
+  .money-date  p{
+    color: gray;
+    font-size: 1.25rem;
+  }
+  
+  .react-rater-star.is-active {
+    color:#ffcc34!important;
+    font-size: 30px;
+  }
+  
+  .react-rater-star.is-disabled {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .react-multi-carousel-item h5{
+    font-size: 1.5rem;
+  }
+  
+  .react-multi-carousel-item h6{
+    font-size: 1.25rem;
+  }
+
+  .money-date  p{
+    color: gray;
+    font-size: 1rem;
+  }
+  
+  .react-rater-star.is-active {
+    color:#ffcc34!important;
+    font-size: 20px;
+  }
+  
+  .react-rater-star.is-disabled {
+    font-size: 20px;
+  }
+
+  .carrosel-id {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .react-multi-carousel-item h5{
+    font-size: 1rem;
+  }
+  
+  .react-multi-carousel-item h6{
+    font-size: 0.75rem;
+  }
+
+  .money-date  p{
+    color: gray;
+    font-size: 0.5rem;
+  }
+  
+  .react-rater-star.is-active {
+    color:#ffcc34!important;
+    font-size: 15px;
+  }
+  
+  .react-rater-star.is-disabled {
+    font-size: 15px;
+  }
+
+  .carrosel-id {
+    font-size: 1rem;
+  }
 }
