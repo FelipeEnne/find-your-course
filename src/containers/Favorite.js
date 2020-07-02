@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -144,7 +145,6 @@ const Favorite = props => {
 };
 
 Favorite.propTypes = {
-  resp: PropTypes.arrayOf(object).isRequired,
   getCourses: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
