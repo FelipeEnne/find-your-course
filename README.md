@@ -29,21 +29,31 @@ You can find <a href="https://eloquent-euclid-648aac.netlify.app/"> here</a>
 
 ### Login Page
 
+Is a simple login page where the user can enter the App.
+
 <img src="./public/img/login.png" alt="Login Page" >
 
 ### Signup Page
+
+User can create an account.
 
 <img src="./public/img/signup.png" alt="Signup Page" >
 
 ### Home Page
 
+The home page is a list of courses and the user can select a specific course to find out more and favorite it.
+
 <img src="./public/img/home.png" alt="Home Page" >
 
 ### Info Page
 
+On this page the user has more information about the course and can favorite it.
+
 <img src="./public/img/info.png" alt="Info Page" >
 
 ### Favorite Page
+
+Shows the courses the user has favored.
 
 <img src="./public/img/favorites.png" alt="Favorite Page" >
 
