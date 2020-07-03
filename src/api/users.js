@@ -18,7 +18,7 @@ const createUser = async props => {
 
   if (password === confirmation) {
     const urlUsers = `${url}/users`;
-    const params = `name=${name}&email=${email}&password_digest=${password}&favorite=${''}`;
+    const params = `name=${name}&email=${email}&password=${password}&password_confirmation=${confirmation}&favorite=${''}`;
 
     const response = await axios.post(`${urlUsers}?${params}`);
     return response.data;
