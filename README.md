@@ -77,8 +77,10 @@ To use this API locally, follow the steps:
 * Github
 
 ## Contact
-
-Felipe Enne - felipeenne@gmail.com | <a href="https://github.com/FelipeEnne">GitHub</a> | <a href="https://www.linkedin.com/in/felipe-enne/">Linkedin</a>
+Felipe Enne Mendes Ribeiro
+* Email - felipeenne@gmail.com
+* <a href="https://www.linkedin.com/in/felipe-enne/" target="_blank">LinkedIn</a>
+* <a href="https://felipeenne.com/" target="_blank">Portfolio</a>
 
 ## Acknowledgements
 
