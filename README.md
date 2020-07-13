@@ -12,7 +12,7 @@
 ## About
 
 The project's goal was to build a mobile web app based on a <a href="https://www.behance.net/gallery/37706679/Circle-(Landing-page-Dashboard-Mobile-App)"> find your house app.</a>
-The back-end was used REST API done with Ruby on Rails. 
+Back-end: REST API with Ruby on Rails.
 The front-end was used React and Redux. 
 
 The project's assignment can be seen <a href="https://www.notion.so/Final-Capstone-Project-Find-Your-House-9a424802e7dc48eb8ef40e2ac09397d1"> here</a>
