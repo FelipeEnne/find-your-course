@@ -10,7 +10,7 @@ const info = JSON.stringify({
   id: 0,
   name: '',
   email: '',
-  favorite: ',',
+  favorite: '',
   remember: false,
 });
 
