@@ -5,6 +5,7 @@
   - [About](#about)
   - [The App](#the-app)
   - [Technologies used](#technologies-used)
+  - [Future work](#future-work)
   - [Contact](#contact)
   - [Acknowledgments](#acknowledgments)
   - [Show your support](#show-your-support)
@@ -73,7 +74,12 @@ To use this API locally, follow the steps:
 * A bit of HTML and CSS
 * React
 * Redux
-* Github
+* GitHub
+
+## Future work
+
+* Implement the search bar
+* Implement the warnings
 
 ## Contact
 Felipe Enne Mendes Ribeiro
