@@ -24,6 +24,7 @@ The back-end repository can be found <a href="https://github.com/FelipeEnne/api_
 
 ## The App
 
+<a href="https://www.loom.com/share/8282162242cd4c3685ff5444903814f7">Screenshots and Walkthrough</a>
 
 ### Login Page
 
