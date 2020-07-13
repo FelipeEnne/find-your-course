@@ -19,9 +19,7 @@ The project's assignment can be seen <a href="https://www.notion.so/Final-Capsto
 
 The back-end repository can be found <a href="https://github.com/FelipeEnne/api_find_your_course"> here</a>
 
-### Live version
-
-You can find <a href="https://eloquent-euclid-648aac.netlify.app/"> here</a>
+<a href="https://eloquent-euclid-648aac.netlify.app/">Live version</a>
 
 
 ## The App
