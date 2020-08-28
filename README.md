@@ -1,68 +1,97 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+<h1 align="center">Find your course</h1>
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+  - [About](#about)
+  - [The App](#the-app)
+  - [Technologies used](#technologies-used)
+  - [Future work](#future-work)
+  - [Contact](#contact)
+  - [Acknowledgments](#acknowledgments)
+  - [Show your support](#show-your-support)
 
-### `yarn start`
+## About
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project's goal was to build a mobile web app based on a <a href="https://www.behance.net/gallery/37706679/Circle-(Landing-page-Dashboard-Mobile-App)"> find your house app.</a><br/>
+Back-end: REST API with Ruby on Rails.<br/>
+Front-end: React and Redux.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The project's assignment can be seen <a href="https://www.notion.so/Final-Capstone-Project-Find-Your-House-9a424802e7dc48eb8ef40e2ac09397d1"> here</a>
 
-### `yarn test`
+The back-end repository can be found <a href="https://github.com/FelipeEnne/api_find_your_course"> here</a>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<a href="https://eloquent-euclid-648aac.netlify.app/">Live version</a>
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## The App
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<a href="https://www.loom.com/share/8282162242cd4c3685ff5444903814f7">Screenshots and Walkthrough</a>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Login Page
 
-### `yarn eject`
+Is a simple login page where the user can enter the App.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<img src="./public/img/login.png" alt="Login Page" >
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Signup Page
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+User can create an account.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<img src="./public/img/signup.png" alt="Signup Page" >
 
-## Learn More
+### Home Page
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The home page is a list of courses and the user can select a specific course to find out more and favorite it.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="./public/img/home.png" alt="Home Page" >
 
-### Code Splitting
+### Info Page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+On this page the user has more information about the course and can favorite it.
 
-### Analyzing the Bundle Size
+<img src="./public/img/info.png" alt="Info Page" >
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Favorite Page
 
-### Making a Progressive Web App
+Shows the courses the user has favored.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+<img src="./public/img/favorites.png" alt="Favorite Page" >
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+#### Local usage
 
-### Deployment
+To use this API locally, follow the steps:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+* Clone the repository
+* Open your terminal and navigate to repository's folder
+* Run:
+  * npm install
+  * npm start
 
-### `yarn build` fails to minify
+## Technologies used
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* JavaScript
+* A bit of HTML and CSS
+* React
+* Redux
+* GitHub
+
+## Future work
+
+* Implement the search bar
+* Implement the warnings
+
+## Contact
+Felipe Enne Mendes Ribeiro
+* Email - felipeenne@gmail.com
+* <a href="https://www.linkedin.com/in/felipe-enne/" target="_blank">LinkedIn</a>
+* <a href="https://felipeenne.com/" target="_blank">Portfolio</a>
+
+## Acknowledgements
+
+- [Microverse](https://www.microverse.org/)
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
