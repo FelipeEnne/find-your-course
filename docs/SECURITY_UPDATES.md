@@ -204,6 +204,37 @@ npm install axios@0.21.4 --legacy-peer-deps
 | #456 | `ip` | Advisory marca `ip *`; fix real exige CRA 5+ / webpack-dev-server 4+ |
 | #477 | `elliptic` | npm audit lista `elliptic *` mesmo em 6.6.1; fix completo exige sair da árvore Webpack 4 |
 
+### Lote 10 — Overrides seguros (2026-06-24)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Alertas Dependabot |
+|--------|-----------------|-------------|------|-------------------|
+| `ws` | 8.18.0 | 8.21.0 | Transitiva | #504 |
+| `path-to-regexp@1` | 1.8.0 | 1.9.0 | Transitiva | #469 |
+| `browserify-sign` | 4.2.0 | 4.2.6 | Transitiva | #444 |
+| `color-string` | 1.5.3 | 1.5.5 | Transitiva | #95 |
+| `tough-cookie` | 2.5.0 | 4.1.3 | Transitiva | #147 |
+| `cross-spawn@6` | 6.0.5 | 6.0.6 | Transitiva | #474 |
+| `cross-spawn@7` | 7.0.1 | 7.0.6 | Transitiva | #475 |
+
+**Nota:** `path-to-regexp@1` limita o override à linha 1.x (react-router); `express` mantém `0.1.13` aninhado.
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 10:** **159 vulnerabilidades** (9 low, 132 moderate, 13 high, 5 critical) — **−6 vs pós-lote 9** (−63 vs baseline)
+
+**Build:** OK com `NODE_OPTIONS=--openssl-legacy-provider` no Node 22.
+
+**Alertas Dependabot que devem fechar após merge + rescan:** ws (#504), path-to-regexp (#469), browserify-sign (#444), color-string (#95), tough-cookie (#147), cross-spawn (#474, #475).
+
+**Ainda abertos (próximos passos):**
+
+| Grupo | Alertas | Abordagem |
+|-------|---------|-----------|
+| `axios` (direta) | #424, #298, #398, #406, #416, #418, #420, #479 (+ outros) | axios 1.x — projeto dedicado |
+| Toolchain dev | #449, #472, #319, #404, #78, #457 | overrides arriscados ou CRA 5+ |
+| Sem patch | #451, #456 | babel-traverse, ip |
+| `postcss` | #94, #115 | CRA 5+ / stylelint 17 |
+
 ---
 
 ## Resultado dos testes
@@ -213,17 +244,17 @@ npm install axios@0.21.4 --legacy-peer-deps
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **~165** (pós-lote 9) | Baseline era 222; −57 no total |
+| `npm audit` | **159** (pós-lote 10) | Baseline era 222; −63 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual (lote 9) | Δ |
-|---------|----------|----------------|---|
-| Total | 222 | ~165 | −57 |
+| Métrica | Baseline | Atual (lote 10) | Δ |
+|---------|----------|-----------------|---|
+| Total | 222 | 159 | −63 |
 | Critical | 20 | 5 | −15 |
-| High | 58 | 18 | −40 |
-| Moderate | 134 | 134 | 0 |
-| Low | 10 | 8 | −2 |
+| High | 58 | 13 | −45 |
+| Moderate | 134 | 132 | −2 |
+| Low | 10 | 9 | −1 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
 
