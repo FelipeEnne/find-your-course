@@ -165,6 +165,45 @@ npm install axios@0.21.4 --legacy-peer-deps
 
 **Ainda abertos (sem fix compatível com CRA 3):** `lodash.template`, `axios` (major 1.x), `ip` (npm audit ainda lista `ip *` mesmo em 2.0.1 — advisory sem versão corrigida no ecossistema webpack-dev-server 3).
 
+### Lote 9 — Alertas Dependabot listados (2026-06-24)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Alertas Dependabot |
+|--------|-----------------|-------------|------|-------------------|
+| `ansi-regex` | 4.1.0 (várias) | 5.0.1 | Transitiva | #126, #127, #128 |
+| `ansi-html` | 0.0.7 | 0.0.8 | Transitiva | #118 |
+| `cipher-base` | 1.0.4 | 1.0.7 | Transitiva | #245 |
+| `sha.js` | 2.4.11 | 2.4.12 | Transitiva | #248 |
+| `pbkdf2` | 3.1.1 | 3.1.6 | Transitiva | #237, #296 |
+| `flatted` | 2.0.2 | 3.4.2 | Transitiva | #323 |
+| `minimatch` | 3.0.4 | 3.1.5 | Transitiva | #135, #314 |
+| `nth-check` | 1.0.2 | 2.0.1 | Transitiva | #103 |
+| `is-svg` | 3.0.0 | 4.3.2 | Transitiva | #80, #106 |
+| `ws` | 5.2.2 / 6.2.1 | 8.18.0 | Transitiva | #458, #459 |
+| `lodash.template` | 4.5.0 | 4.18.1 | Transitiva | #340, #452 |
+| `immer` (via RTK) | 7.0.5 | 9.0.21 | Transitiva | #453, #454, #455 |
+| `elliptic` | 6.5.4 | 6.6.1 | Transitiva | #477 (parcial) |
+| `brace-expansion` | 1.1.11 | 1.1.15 | Transitiva | ReDoS |
+| `bn.js@4` / `bn.js@5` | várias | 4.12.3 / 5.2.3 | Transitiva | infinite loop |
+
+**Override aninhado:** `@reduxjs/toolkit` → `immer@9.0.21` (RTK não é usado em `src/`; `react-dev-utils` mantém `immer@1.10.0` aninhado).
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 9:** **~165 vulnerabilidades** (8 low, 134 moderate, 18 high, 5 critical) — **−18 vs pós-lote 8** (−57 vs baseline)
+
+**Build:** OK com `NODE_OPTIONS=--openssl-legacy-provider` no Node 22.
+
+**Alertas Dependabot que devem fechar após merge + rescan:** ansi-regex (×3), ansi-html, cipher-base, sha.js, pbkdf2 (×2), flatted, minimatch (×2), nth-check, is-svg (×2), ws (×2), lodash.template (×2), immer (×3).
+
+**Ainda abertos — requerem major upgrade ou não têm fix:**
+
+| Alerta | Pacote | Motivo |
+|--------|--------|--------|
+| #424 | `axios` | Correção completa exige axios 1.x (major); app usa 0.21.4 |
+| #451 | `babel-traverse` | Babel 6 em `devDependencies`; sem patch — risco só em build |
+| #456 | `ip` | Advisory marca `ip *`; fix real exige CRA 5+ / webpack-dev-server 4+ |
+| #477 | `elliptic` | npm audit lista `elliptic *` mesmo em 6.6.1; fix completo exige sair da árvore Webpack 4 |
+
 ---
 
 ## Resultado dos testes
@@ -174,17 +213,17 @@ npm install axios@0.21.4 --legacy-peer-deps
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **183** (pós-lote 8) | Baseline era 222; −39 no total |
+| `npm audit` | **~165** (pós-lote 9) | Baseline era 222; −57 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual (lote 8) | Δ |
+| Métrica | Baseline | Atual (lote 9) | Δ |
 |---------|----------|----------------|---|
-| Total | 222 | 183 | −39 |
-| Critical | 20 | 12 | −8 |
-| High | 58 | 35 | −23 |
-| Moderate | 134 | 133 | −1* |
-| Low | 10 | 3 | −7 |
+| Total | 222 | ~165 | −57 |
+| Critical | 20 | 5 | −15 |
+| High | 58 | 18 | −40 |
+| Moderate | 134 | 134 | 0 |
+| Low | 10 | 8 | −2 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
 
@@ -214,7 +253,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 | Grupo | Pacotes ainda vulneráveis | Abordagem sugerida |
 |-------|---------------------------|-------------------|
-| B — Transitivas CRA | `elliptic` (parcial), `lodash.template`, `postcss-*`, `webpack-dev-server`, `minimatch`, `braces` | Muitos exigem CRA 5+; `lodash.template` sem fix |
+| B — Transitivas CRA | `elliptic` (parcial), `babel-traverse`, `postcss-*`, `webpack-dev-server`, `ip` | Muitos exigem CRA 5+ |
 | C — Diretas | — | `react-scripts` já no último patch 3.x |
 | D — Major | `react-scripts` 5+, `axios` 1.x, React 17/18, Node CI 12→16 | Projeto separado |
 
