@@ -235,6 +235,33 @@ npm install axios@0.21.4 --legacy-peer-deps
 | Sem patch | #451, #456 | babel-traverse, ip |
 | `postcss` | #94, #115 | CRA 5+ / stylelint 17 |
 
+### Lote 11 — Dependências diretas core + overrides transitivas (2026-06-24)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `react` | 16.13.1 | 16.14.0 | **Direta** | Último patch React 16 |
+| `react-dom` | 16.13.1 | 16.14.0 | **Direta** | Peer de react |
+| `redux` | 4.0.5 | 4.2.1 | **Direta** | Minor 4.x, API estável |
+| `redux-thunk` | 2.3.0 | 2.4.2 | **Direta** | Minor 2.x |
+| `react-redux` | 7.2.0 | 7.2.9 | **Direta** | Patch 7.x |
+| `bootstrap` | 4.5.0 | 4.6.2 | **Direta** | Última release Bootstrap 4.x |
+| `qs` | 6.14.2 | 6.15.3 | Transitiva (override) | GHSA-q8mj-m7cp-5q26 (DoS) |
+| `word-wrap` | 1.2.3 | 1.2.5 | Transitiva (override) | GHSA-j8xg-fqg3-53r7 (ReDoS) |
+
+**Comando:**
+
+```bash
+npm install react@16.14.0 react-dom@16.14.0 redux@4.2.1 redux-thunk@2.4.2 react-redux@7.2.9 bootstrap@4.6.2 --legacy-peer-deps
+```
+
+**Arquivos alterados:** `package.json`, `package-lock.json`
+
+**Resultado audit após lote 11:** **170 vulnerabilidades** (13 low, 137 moderate, 15 high, 5 critical) — **−2 vs pré-lote 11** (172 no diagnóstico desta sessão)
+
+**Build:** OK com `NODE_OPTIONS=--openssl-legacy-provider` no Node 22.
+
+**Código-fonte:** não alterado.
+
 ---
 
 ## Resultado dos testes
@@ -244,17 +271,17 @@ npm install axios@0.21.4 --legacy-peer-deps
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **159** (pós-lote 10) | Baseline era 222; −63 no total |
+| `npm audit` | **170** (pós-lote 11) | Baseline era 222; −52 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual (lote 10) | Δ |
+| Métrica | Baseline | Atual (lote 11) | Δ |
 |---------|----------|-----------------|---|
-| Total | 222 | 159 | −63 |
+| Total | 222 | 170 | −52 |
 | Critical | 20 | 5 | −15 |
-| High | 58 | 13 | −45 |
-| Moderate | 134 | 132 | −2 |
-| Low | 10 | 9 | −1 |
+| High | 58 | 15 | −43 |
+| Moderate | 134 | 137 | +3 |
+| Low | 10 | 13 | +3 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
 
@@ -295,7 +322,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 ## Riscos pendentes
 
 1. **Um lockfile** — `yarn.lock` removido; usar apenas npm.
-2. **Node 22 local vs Node 12 no CI** — builds podem divergir; considerar alinhar CI para Node 16 LTS em mudança futura.
+2. **Node 22 local vs Node 18 no CI** — builds podem divergir; considerar alinhar CI para Node 20 LTS em mudança futura.
 3. **Sem testes automatizados** — regressões só aparecem em build manual ou uso da app.
 4. **`npm audit fix --force`** — instalaria `react-scripts@5.0.1`; **não executado** (quebra major).
 5. **axios 0.21.4** — melhora sobre 0.19.2, mas audit moderno ainda lista advisories em `<=0.31.1`; correção completa exigiria axios 1.x (major).
@@ -309,6 +336,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 3. ~~**Decidir** sobre `yarn.lock`~~ — removido; Dependabot monitora só npm.
 4. **Opcional:** `.npmrc` com `legacy-peer-deps=true`; CI com Node 16 + `npm run build`.
 5. **Longo prazo:** migração CRA 5+ / Vite + React 18 + axios 1.x (Grupo D).
+6. **Lote 12 sugerido:** `react-router-dom@5.3.4`, `react-multi-carousel@2.8.6`, `eslint-plugin-jsx-a11y@6.10.2`, override `yaml` (A confirmar).
 
 ---
 
@@ -323,8 +351,8 @@ git diff package-lock.json
 **Não commitado automaticamente.** Sugestão de commits:
 
 ```bash
-git add package.json package-lock.json docs/SECURITY_UPDATES.md
-git commit -m "fix: patch vulnerable dependencies (overrides + react-scripts 3.4.4)"
+git add package.json package-lock.json docs/SECURITY_UPDATES.md docs/DEPENDENCY_UPGRADE_PLAN.md
+git commit -m "fix: update low-risk dependencies (lote 11)"
 ```
 
 Ou commits separados por lote:
