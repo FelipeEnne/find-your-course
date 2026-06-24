@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
@@ -22,12 +22,10 @@ const Info = props => {
     resp,
     loading,
     getCoursesId,
-    match,
   } = props;
 
-  // console.log(props);
-  const { id } = match.params;
-  const history = useHistory();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCoursesId(id);
@@ -35,12 +33,14 @@ const Info = props => {
 
   const info = JSON.parse(localStorage.localUser);
 
+  useEffect(() => {
+    if (!info.remember) {
+      navigate('/');
+    }
+  }, [info.remember, navigate]);
+
   if (!info.remember) {
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
+    return null;
   }
 
   const shouldComponentRender = () => {
@@ -166,7 +166,6 @@ const Info = props => {
 Info.propTypes = {
   getCoursesId: PropTypes.instanceOf(Function).isRequired,
   loading: PropTypes.bool.isRequired,
-  match: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({

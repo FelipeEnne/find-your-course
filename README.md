@@ -67,6 +67,10 @@ To use this API locally, follow the steps:
 * Run:
   * npm install
   * npm start
+  * npm run build (produção)
+  * npm test -- --run (testes)
+
+Variável de ambiente opcional: copie `.env.example` para `.env` e defina `VITE_API_URL`.
 
 ## Technologies used
 

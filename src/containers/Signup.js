@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { createUser } from '../api/users';
 
 const Signup = props => {
@@ -16,7 +16,17 @@ const Signup = props => {
     confirmation: '',
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.logged) {
+      navigate('/home');
+    }
+  }, [user.logged, navigate]);
+
+  if (user.logged) {
+    return null;
+  }
 
   const handleChange = event => {
     const { id, value } = event.target;
@@ -31,21 +41,8 @@ const Signup = props => {
     event.preventDefault();
 
     await createUser(userInfo);
-
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
+    navigate('/');
   };
-
-  if (user.logged) {
-    return (
-      <div>
-        {history.push('/home')}
-      </div>
-    );
-  }
 
   return (
     <div className="signup">

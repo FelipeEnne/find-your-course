@@ -400,7 +400,37 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 ---
 
-## Git — arquivos alterados neste ciclo
+## Lote 15 — Grupo B: migração Vite + React 18 (2026-06-24)
+
+| Ação | Detalhe |
+|------|---------|
+| Toolchain | `react-scripts@3.4.4` removido → `vite@6` + `@vitejs/plugin-react` |
+| React | 16.14 → 18.3; `ReactDOM.render` → `createRoot` |
+| Router | react-router-dom 5.3 → 6.30; `useHistory` → `useNavigate` |
+| HTTP | axios 0.21 → 1.18 |
+| CSS | bootstrap 4.6 → 5.3; react-bootstrap 1.6 → 2.10 |
+| Lint | eslint 6 → 8; stylelint 13 → 16 |
+| CI | Node 20; jobs build + test; `npm ci` |
+| Overrides | Bloco `overrides` (~60 entradas) removido |
+| Deps removidas | `@reduxjs/toolkit`, `@fortawesome/*`, `@brainhubeu/react-carousel`, toast libs, Babel 6 devDeps |
+| Testes | Vitest + `App.test.js`, `store.test.js` |
+| Env | `.env.example` com `VITE_API_URL` |
+
+**Resultado audit:** 170 → **6** vulnerabilidades (0 critical). Residuais em `react-multi-carousel` → `npm`.
+
+**API Heroku:** `protected-beyond-23220.herokuapp.com` retornou 404 em `/courses` (2026-06-24) — smoke E2E pendente de backend ativo.
+
+**Comandos de validação:**
+
+```powershell
+npm install
+npm run build
+npm test -- --run
+npm run lint
+npm audit
+```
+
+---
 
 ```bash
 git status

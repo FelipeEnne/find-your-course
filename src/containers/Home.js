@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
@@ -27,7 +27,7 @@ const Home = props => {
     getCourses,
     logout,
   } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCourses();
@@ -35,15 +35,15 @@ const Home = props => {
 
   const info = JSON.parse(localStorage.localUser);
 
-  if (!info.remember) {
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!info.remember) {
+      navigate('/');
+    }
+  }, [info.remember, navigate]);
 
-  // console.log(props);
+  if (!info.remember) {
+    return null;
+  }
 
   const shouldComponentRender = () => {
     if (resps === undefined) return false;
@@ -57,7 +57,7 @@ const Home = props => {
 
   const handleLogout = () => {
     logout();
-    const info = JSON.stringify({
+    const userInfo = JSON.stringify({
       id: 0,
       name: '',
       email: '',
@@ -65,13 +65,8 @@ const Home = props => {
       remember: false,
     });
 
-    localStorage.setItem('localUser', info);
-
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
+    localStorage.setItem('localUser', userInfo);
+    navigate('/');
   };
 
   const responsive = {

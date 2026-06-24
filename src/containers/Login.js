@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../actions/user';
 import { userLogin } from '../api/users';
 
@@ -12,19 +12,27 @@ const Login = props => {
   const [name, setName] = useState();
   const [password, setPassword] = useState();
 
-  // console.log(props);
-
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const localGet = localStorage.getItem('localUser');
-  const localUser = JSON.parse(localGet);
+  let localUser = { remember: false };
+  try {
+    const parsed = JSON.parse(localGet);
+    if (parsed) {
+      localUser = parsed;
+    }
+  } catch {
+    localUser = { remember: false };
+  }
+
+  useEffect(() => {
+    if (localUser.remember) {
+      navigate('/home');
+    }
+  }, [localUser.remember, navigate]);
 
   if (localUser.remember) {
-    return (
-      <div>
-        {history.push('/home')}
-      </div>
-    );
+    return null;
   }
 
   const handleChange = event => {
@@ -39,7 +47,6 @@ const Login = props => {
     event.preventDefault();
 
     const response = await userLogin({ name, password });
-    // console.log(response);
 
     if (response !== '') {
       const info = JSON.stringify({
@@ -53,18 +60,8 @@ const Login = props => {
       localStorage.setItem('localUser', info);
 
       login({ id: response.id, name: response.name, email: response.email });
-      return (
-        <div>
-          {history.push('/home')}
-        </div>
-      );
+      navigate('/home');
     }
-
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
   };
 
   return (

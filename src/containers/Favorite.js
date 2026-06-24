@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Table from 'react-bootstrap/Table';
 
@@ -26,7 +26,7 @@ const Favorite = props => {
     logout,
   } = props;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCourses();
@@ -34,12 +34,14 @@ const Favorite = props => {
 
   const info = JSON.parse(localStorage.localUser);
 
+  useEffect(() => {
+    if (!info.remember) {
+      navigate('/');
+    }
+  }, [info.remember, navigate]);
+
   if (!info.remember) {
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
+    return null;
   }
 
   const shouldComponentRender = () => {
@@ -54,7 +56,7 @@ const Favorite = props => {
 
   const handleLogout = () => {
     logout();
-    const info = JSON.stringify({
+    const userInfo = JSON.stringify({
       id: 0,
       name: '',
       email: '',
@@ -62,13 +64,8 @@ const Favorite = props => {
       remember: false,
     });
 
-    localStorage.setItem('localUser', info);
-
-    return (
-      <div>
-        {history.push('/')}
-      </div>
-    );
+    localStorage.setItem('localUser', userInfo);
+    navigate('/');
   };
 
   const getFavorites = () => {

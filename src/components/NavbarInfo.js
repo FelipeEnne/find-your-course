@@ -23,7 +23,7 @@ const NavbarheaderInfo = ({ name }) => (
       </div>
       <div className="header-div">
         <Nav>
-          <img src="../img/search.png" alt="menu" className="search-header" />
+          <img src="/img/search.png" alt="menu" className="search-header" />
           <input disabled id="input-fillter" type="text" className="form-control input-filter" />
         </Nav>
       </div>

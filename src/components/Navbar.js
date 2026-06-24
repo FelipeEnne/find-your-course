@@ -11,15 +11,13 @@ const Navbarheader = ({ handleLogout }) => (
   <div className="header">
     <Navbar bg="light" expand="lg">
       <div className="header-burger">
-        <NavDropdown title={<img src="./img/burger.png" alt="menu" className="burger-header" />} id="nav-dropdown">
-          <NavDropdown.Item>
-            <Link to="/favorite">Favorite</Link>
+        <NavDropdown title={<img src="/img/burger.png" alt="menu" className="burger-header" />} id="nav-dropdown">
+          <NavDropdown.Item as={Link} to="/favorite">
+            Favorite
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">
-            <button type="button" className="btn btn-link" onClick={handleLogout}>
-              Logout
-            </button>
+          <NavDropdown.Item onClick={handleLogout}>
+            Logout
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -30,7 +28,7 @@ const Navbarheader = ({ handleLogout }) => (
       </div>
       <div className="header-div">
         <Nav>
-          <img src="./img/search.png" alt="menu" className="search-header" />
+          <img src="/img/search.png" alt="menu" className="search-header" />
           <input disabled id="input-fillter" type="text" className="form-control input-filter" />
         </Nav>
       </div>
