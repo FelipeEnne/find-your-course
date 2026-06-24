@@ -1,0 +1,8 @@
+# npm only — package-lock.json is the source of truth (see docs/SECURITY_UPDATES.md)
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

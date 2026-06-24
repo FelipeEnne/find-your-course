@@ -10,7 +10,7 @@ Registro das correções de vulnerabilidades em dependências do frontend.
 |-------|-------|
 | Data da análise | 2026-06-24 |
 | Gerenciador adotado | **npm** (CI já usa npm; `package-lock.json` é a fonte da verdade) |
-| Política `yarn.lock` | Mantido no repositório, **não atualizado** neste ciclo — evitar `yarn install` até padronização explícita |
+| Política `yarn.lock` | **Removido** em 2026-06-24 — causava alertas Dependabot duplicados; apenas `package-lock.json` |
 | Node local | v22.22.0 |
 | npm local | 10.9.4 |
 | Node CI | 12.x (`.github/workflows/linters.yml`) |
@@ -107,6 +107,64 @@ npm install axios@0.21.4 --legacy-peer-deps
 
 **Resultado audit após lote 5:** **200 vulnerabilidades** (3 low, 137 moderate, 44 high, 16 critical) — **−22 vs baseline**
 
+### Lote 6 — Transitivas pendentes (PRs Dependabot #17, #29, #35)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `qs` | 6.5.2 | 6.5.3 | Transitiva | PR #35; prototype pollution / DoS |
+| `lodash-es` | 4.17.15 | 4.17.21 | Transitiva | PR #29; via `react-bootstrap` / `@restart/hooks` |
+| `elliptic` | 6.5.3 | 6.5.4 | Transitiva | PR #17; patch crypto (CRA/Webpack) |
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 6:** **201 vulnerabilidades** (3 low, 138 moderate, 42 high, 18 critical) — **−3 vs pós-lote 5** (−21 vs baseline)
+
+**PRs Dependabot que podem ser fechados após este lote:** #17, #29, #35 (além dos 17 já identificados anteriormente).
+
+**Nota:** `elliptic` ainda pode aparecer no audit — advisories recentes afetam várias versões; 6.5.4 é o máximo compatível pedido pelo Dependabot.
+
+### Lote 7 — `lodash`, `semver`, `form-data`, `node-forge`
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `lodash` | 4.17.15 (várias cópias) | 4.18.1 | Transitiva | Prototype pollution / code injection |
+| `lodash-es` | 4.17.21 | 4.18.1 | Transitiva | Mesmos advisories; última 4.x |
+| `semver@5` | 5.7.1 | 5.7.2 | Transitiva | GHSA-c2qf-rxjj-qqgw (ReDoS) |
+| `semver@6` | 6.3.0 | 6.3.1 | Transitiva | idem |
+| `semver@7` | 7.5.x | 7.6.3 | Transitiva | idem |
+| `form-data` | 2.3.3 | 2.5.6 | Transitiva | GHSA-fjxv-7rqg-78g4, GHSA-hmw2-7cc7-3qxx |
+| `node-forge` | 0.10.0 | 1.4.0 | Transitiva | Múltiplos GHSAs (ASN.1, cert chain) |
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 7:** **193 vulnerabilidades** (3 low, 139 moderate, 35 high, 16 critical) — **−8 vs pós-lote 6** (−29 vs baseline)
+
+**Pendente:** `lodash.template@4.5.0` (pacote abandonado) — sem fix disponível no npm audit.
+
+### Lote 8 — Alertas Dependabot abertos (y18n, shell-quote, json-schema, qs, ip, ajv)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Alertas Dependabot |
+|--------|-----------------|-------------|------|-------------------|
+| `y18n` | 4.0.0 | 4.0.1 | Transitiva | #79, #11 |
+| `shell-quote` | 1.7.2 | 1.8.4 | Transitiva | #250, #249 |
+| `json-schema` | 0.2.3 | 0.4.0 | Transitiva | #161, #105 |
+| `qs` | 6.5.3 | 6.14.2 | Transitiva | #173, #59, #35 |
+| `ip` | 1.1.9 | 2.0.1 | Transitiva | #456, #201 |
+| `ajv` | 6.12.6 | 6.14.0 | Transitiva | ReDoS GHSA-2g4f-4pwh-qvx6 |
+
+**Outras ações:**
+
+- `yarn.lock` removido — metade dos alertas Dependabot eram duplicatas do lockfile desatualizado
+- `.github/dependabot.yml` adicionado — monitora apenas npm (`package-lock.json`)
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 8:** **183 vulnerabilidades** (3 low, 133 moderate, 35 high, 12 critical) — **−10 vs pós-lote 7** (−39 vs baseline)
+
+**Alertas Dependabot que devem fechar após merge + rescan:** y18n, shell-quote, json-schema, qs, lodash, lodash-es, decode-uri-component, json5, loader-utils, minimist (todos os que eram só `yarn.lock` ou já corrigidos em lotes anteriores).
+
+**Ainda abertos (sem fix compatível com CRA 3):** `lodash.template`, `axios` (major 1.x), `ip` (npm audit ainda lista `ip *` mesmo em 2.0.1 — advisory sem versão corrigida no ecossistema webpack-dev-server 3).
+
 ---
 
 ## Resultado dos testes
@@ -116,16 +174,16 @@ npm install axios@0.21.4 --legacy-peer-deps
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **200** (pós-lote 5) | Baseline era 222; −22 no total |
+| `npm audit` | **183** (pós-lote 8) | Baseline era 222; −39 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual | Δ |
-|---------|----------|-------|---|
-| Total | 222 | 200 | −22 |
-| Critical | 20 | 16 | −4 |
-| High | 58 | 44 | −14 |
-| Moderate | 134 | 137 | +3* |
+| Métrica | Baseline | Atual (lote 8) | Δ |
+|---------|----------|----------------|---|
+| Total | 222 | 183 | −39 |
+| Critical | 20 | 12 | −8 |
+| High | 58 | 35 | −23 |
+| Moderate | 134 | 133 | −1* |
 | Low | 10 | 3 | −7 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
@@ -156,7 +214,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 | Grupo | Pacotes ainda vulneráveis | Abordagem sugerida |
 |-------|---------------------------|-------------------|
-| B — Transitivas CRA | `elliptic`, `http-proxy`, `qs`, `express`, `dns-packet`, `postcss-*`, `webpack-dev-server` | Overrides pontuais ou aceitar risco dev-only; muitos exigem CRA 5+ |
+| B — Transitivas CRA | `elliptic` (parcial), `lodash.template`, `postcss-*`, `webpack-dev-server`, `minimatch`, `braces` | Muitos exigem CRA 5+; `lodash.template` sem fix |
 | C — Diretas | — | `react-scripts` já no último patch 3.x |
 | D — Major | `react-scripts` 5+, `axios` 1.x, React 17/18, Node CI 12→16 | Projeto separado |
 
@@ -166,7 +224,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 ## Riscos pendentes
 
-1. **Dois lockfiles** — `yarn.lock` existe mas está desatualizado; usar apenas npm neste ciclo.
+1. **Um lockfile** — `yarn.lock` removido; usar apenas npm.
 2. **Node 22 local vs Node 12 no CI** — builds podem divergir; considerar alinhar CI para Node 16 LTS em mudança futura.
 3. **Sem testes automatizados** — regressões só aparecem em build manual ou uso da app.
 4. **`npm audit fix --force`** — instalaria `react-scripts@5.0.1`; **não executado** (quebra major).
@@ -176,11 +234,11 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 ## Próximos passos
 
-1. **Smoke manual** de login/signup/favoritos com API ativa.
-2. **Avaliar** `elliptic`, `dns-packet`, `postcss-*` — muitos sem fix compatível com Webpack 4.
-3. **Opcional:** `.npmrc` com `legacy-peer-deps=true`.
-4. **Opcional:** alinhar CI para Node 16.x e adicionar job de `npm run build`.
-5. **Longo prazo:** migração CRA 5+ / Vite + React 18 (Grupo D).
+1. **Fechar PRs Dependabot** obsoletos após merge (yarn.lock removido elimina ~metade dos alertas).
+2. **Smoke manual** de login/signup/favoritos com API ativa.
+3. ~~**Decidir** sobre `yarn.lock`~~ — removido; Dependabot monitora só npm.
+4. **Opcional:** `.npmrc` com `legacy-peer-deps=true`; CI com Node 16 + `npm run build`.
+5. **Longo prazo:** migração CRA 5+ / Vite + React 18 + axios 1.x (Grupo D).
 
 ---
 
