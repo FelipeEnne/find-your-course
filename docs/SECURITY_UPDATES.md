@@ -262,6 +262,50 @@ npm install react@16.14.0 react-dom@16.14.0 redux@4.2.1 redux-thunk@2.4.2 react-
 
 **Código-fonte:** não alterado.
 
+### Lote 12 — Roteamento, carousel e eslint-plugin-jsx-a11y (2026-06-24)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `react-router` | 5.2.0 | 5.3.4 | **Direta** | Minor 5.x (última linha compatível com React 16) |
+| `react-router-dom` | 5.2.0 | 5.3.4 | **Direta** | Minor 5.x; usado em containers e `App.js` |
+| `react-multi-carousel` | 2.5.5 | 2.8.6 | **Direta** | Minor 2.x; usado em `Home.js` |
+| `eslint-plugin-jsx-a11y` | 6.2.3 | 6.10.2 | **devDep** | Minor 6.x; resolve peer dep com `eslint-config-airbnb` |
+
+**Comando:**
+
+```bash
+npm install react-router@5.3.4 react-router-dom@5.3.4 react-multi-carousel@2.8.6 eslint-plugin-jsx-a11y@6.10.2 --legacy-peer-deps
+```
+
+**Arquivos alterados:** `package.json`, `package-lock.json`
+
+**Resultado audit após lote 12:** **176 vulnerabilidades** (13 low, 142 moderate, 16 high, 5 critical) — **+6 vs pós-lote 11** (novas transitivas do `eslint-plugin-jsx-a11y`; critical inalterado em 5)
+
+**Build:** OK com `NODE_OPTIONS=--openssl-legacy-provider` no Node 22.
+
+**Código-fonte:** não alterado.
+
+### Lote 13 — react-bootstrap e override yaml (2026-06-24)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `react-bootstrap` | 1.0.1 | 1.6.8 | **Direta** | Última minor 1.x; usado em Navbar, Favorite |
+| `yaml` | 1.10.0 | 1.10.3 | Transitiva (override) | GHSA-48c2-rrv3-qjmp; patch na linha 1.x (sem saltar para 2.x) |
+
+**Comando:**
+
+```bash
+npm install react-bootstrap@1.6.8 --legacy-peer-deps
+```
+
+**Arquivos alterados:** `package.json`, `package-lock.json`
+
+**Resultado audit após lote 13:** **175 vulnerabilidades** (13 low, 141 moderate, 16 high, 5 critical) — **−1 vs pós-lote 12** (`yaml` removido do audit)
+
+**Build:** OK com `NODE_OPTIONS=--openssl-legacy-provider` no Node 22.
+
+**Código-fonte:** não alterado.
+
 ---
 
 ## Resultado dos testes
@@ -271,16 +315,16 @@ npm install react@16.14.0 react-dom@16.14.0 redux@4.2.1 redux-thunk@2.4.2 react-
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **170** (pós-lote 11) | Baseline era 222; −52 no total |
+| `npm audit` | **175** (pós-lote 13) | Baseline era 222; −47 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual (lote 11) | Δ |
+| Métrica | Baseline | Atual (lote 13) | Δ |
 |---------|----------|-----------------|---|
-| Total | 222 | 170 | −52 |
+| Total | 222 | 175 | −47 |
 | Critical | 20 | 5 | −15 |
-| High | 58 | 15 | −43 |
-| Moderate | 134 | 137 | +3 |
+| High | 58 | 16 | −42 |
+| Moderate | 134 | 141 | +7 |
 | Low | 10 | 13 | +3 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
@@ -336,7 +380,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 3. ~~**Decidir** sobre `yarn.lock`~~ — removido; Dependabot monitora só npm.
 4. **Opcional:** `.npmrc` com `legacy-peer-deps=true`; CI com Node 16 + `npm run build`.
 5. **Longo prazo:** migração CRA 5+ / Vite + React 18 + axios 1.x (Grupo D).
-6. **Lote 12 sugerido:** `react-router-dom@5.3.4`, `react-multi-carousel@2.8.6`, `eslint-plugin-jsx-a11y@6.10.2`, override `yaml` (A confirmar).
+6. **Lote 14 sugerido:** override `js-yaml` (A confirmar), `.npmrc` com `legacy-peer-deps=true`.
 
 ---
 

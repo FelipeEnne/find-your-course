@@ -15,9 +15,9 @@ Documento de referência para atualizações incrementais do frontend legado (CR
 | UI | React / react-dom | 16.14.0 |
 | Build | react-scripts (CRA 3) | 3.4.4 |
 | Estado | redux / redux-thunk / react-redux | 4.2.1 / 2.4.2 / 7.2.9 |
-| Roteamento | react-router-dom | 5.2.0 |
+| Roteamento | react-router-dom | 5.3.4 |
 | HTTP | axios | 0.21.4 |
-| CSS | bootstrap | 4.6.2 |
+| CSS | bootstrap / react-bootstrap | 4.6.2 / 1.6.8 |
 | Lint (dev) | eslint 6 + airbnb | 6.8.0 |
 
 **Node local:** 22.x (build requer `NODE_OPTIONS=--openssl-legacy-provider`)  
@@ -27,9 +27,9 @@ Documento de referência para atualizações incrementais do frontend legado (CR
 
 ## Progresso de segurança
 
-| Métrica | Baseline (início) | Atual (lote 11) |
+| Métrica | Baseline (início) | Atual (lote 13) |
 |---------|-------------------|-----------------|
-| Total audit | 222 | 170 |
+| Total audit | 222 | 175 |
 | Critical | 20 | 5 |
 
 Detalhes por lote em `docs/SECURITY_UPDATES.md`.
@@ -37,6 +37,29 @@ Detalhes por lote em `docs/SECURITY_UPDATES.md`.
 ---
 
 ## Grupo A — Atualização segura (mesma major)
+
+### Concluído — Lote 13 (2026-06-24)
+
+| Pacote | Antes | Depois | Tipo |
+|--------|-------|--------|------|
+| react-bootstrap | 1.0.1 | 1.6.8 | Direta |
+| yaml | 1.10.0 | 1.10.3 | Override |
+
+### Próximo — Lote 14 (sugerido)
+
+| Pacote | Atual | Alvo | Risco | Motivo |
+|--------|-------|------|-------|--------|
+| js-yaml | ≤4.1.1 | A confirmar | Médio | Override transitiva; pacote distinto de `yaml` |
+| `.npmrc` | — | `legacy-peer-deps=true` | Baixo | Evitar falha em `npm install` sem flag |
+
+### Concluído — Lote 12 (2026-06-24)
+
+| Pacote | Antes | Depois | Tipo |
+|--------|-------|--------|------|
+| react-router | 5.2.0 | 5.3.4 | Direta |
+| react-router-dom | 5.2.0 | 5.3.4 | Direta |
+| react-multi-carousel | 2.5.5 | 2.8.6 | Direta |
+| eslint-plugin-jsx-a11y | 6.2.3 | 6.10.2 | devDep |
 
 ### Concluído — Lote 11 (2026-06-24)
 
@@ -50,22 +73,6 @@ Detalhes por lote em `docs/SECURITY_UPDATES.md`.
 | bootstrap | 4.5.0 | 4.6.2 | Direta |
 | qs | 6.14.2 | 6.15.3 | Override |
 | word-wrap | 1.2.3 | 1.2.5 | Override |
-
-### Próximo — Lote 12 (sugerido)
-
-| Pacote | Atual | Alvo | Risco | Motivo |
-|--------|-------|------|-------|--------|
-| react-router-dom | 5.2.0 | 5.3.4 | Baixo | Minor 5.x |
-| react-router | 5.2.0 | 5.3.4 | Baixo | Peer |
-| react-multi-carousel | 2.5.5 | 2.8.6 | Baixo | Usado em `Home.js` |
-| eslint-plugin-jsx-a11y | 6.2.3 | 6.10.2 | Baixo | Resolve peer dep com airbnb |
-| yaml | 1.10.0 | A confirmar | Médio | Override transitiva; fix pode exigir 2.x |
-
-### Lote 13 (sugerido)
-
-| Pacote | Atual | Alvo | Risco | Motivo |
-|--------|-------|------|-------|--------|
-| react-bootstrap | 1.0.1 | 1.6.8 | Médio | Salto 1.0→1.6 dentro da major 1.x |
 
 ### Overrides já aplicados (lotes 1–10)
 
@@ -115,7 +122,7 @@ Ver bloco `overrides` em `package.json` e tabela completa em `docs/SECURITY_UPDA
 | Peer deps conflitam | `--legacy-peer-deps` em todo install |
 | Sem testes automatizados | Build + smoke manual após cada lote |
 | API Rails externa | Smoke de login/signup/favoritos após mudanças |
-| 170 vulnerabilidades restantes | Maioria na árvore `react-scripts@3.4.4` |
+| 175 vulnerabilidades restantes | Maioria na árvore `react-scripts@3.4.4` |
 
 ---
 
@@ -136,7 +143,7 @@ Smoke manual: login, signup, listagem de cursos, favoritar.
 
 ## Próximos passos
 
-1. Aprovar e aplicar **Lote 12** (roteamento, carousel, jsx-a11y).
+1. Avaliar **Lote 14** (override `js-yaml`, `.npmrc`).
 2. Smoke manual com API ativa.
-3. Avaliar override `yaml` (versão segura compatível com CRA 3).
+3. ~~Avaliar override `yaml`~~ — aplicado em 1.10.3 (lote 13).
 4. Planejar migração toolchain (Grupo B) em issue/PR dedicado.
