@@ -4,7 +4,7 @@ Documento de referência para atualizações incrementais do frontend legado (CR
 
 **Última atualização:** 2026-06-24  
 **Gerenciador:** npm (`package-lock.json`)  
-**Instalação:** sempre com `npm install --legacy-peer-deps`
+**Instalação:** `npm install` (`.npmrc` com `legacy-peer-deps=true` desde lote 14)
 
 ---
 
@@ -27,9 +27,9 @@ Documento de referência para atualizações incrementais do frontend legado (CR
 
 ## Progresso de segurança
 
-| Métrica | Baseline (início) | Atual (lote 13) |
+| Métrica | Baseline (início) | Atual (lote 14) |
 |---------|-------------------|-----------------|
-| Total audit | 222 | 175 |
+| Total audit | 222 | 170 |
 | Critical | 20 | 5 |
 
 Detalhes por lote em `docs/SECURITY_UPDATES.md`.
@@ -38,6 +38,15 @@ Detalhes por lote em `docs/SECURITY_UPDATES.md`.
 
 ## Grupo A — Atualização segura (mesma major)
 
+### Concluído — Lote 14 (2026-06-24)
+
+| Ação | Resultado |
+|------|-----------|
+| `.npmrc` → `legacy-peer-deps=true` | Aplicado |
+| Override `js-yaml@4.2.0` | **Revertido** — quebra build (`safeLoad` removido na v4) |
+
+`js-yaml` permanece em **Grupo B** — correção exige CRA 5+ / cosmiconfig 6+.
+
 ### Concluído — Lote 13 (2026-06-24)
 
 | Pacote | Antes | Depois | Tipo |
@@ -45,12 +54,9 @@ Detalhes por lote em `docs/SECURITY_UPDATES.md`.
 | react-bootstrap | 1.0.1 | 1.6.8 | Direta |
 | yaml | 1.10.0 | 1.10.3 | Override |
 
-### Próximo — Lote 14 (sugerido)
+### Grupo A esgotado para CRA 3
 
-| Pacote | Atual | Alvo | Risco | Motivo |
-|--------|-------|------|-------|--------|
-| js-yaml | ≤4.1.1 | A confirmar | Médio | Override transitiva; pacote distinto de `yaml` |
-| `.npmrc` | — | `legacy-peer-deps=true` | Baixo | Evitar falha em `npm install` sem flag |
+Pacotes diretos e overrides transitivos compatíveis foram aplicados nos lotes 1–14. Vulnerabilidades restantes (~170) estão na árvore `react-scripts@3.4.4`.
 
 ### Concluído — Lote 12 (2026-06-24)
 
@@ -94,14 +100,14 @@ Ver bloco `overrides` em `package.json` e tabela completa em `docs/SECURITY_UPDA
 | eslint | 6.8 | 10.x | Flat config | Com CRA 5+ |
 | stylelint | 13.x | 17.x | PostCSS 8+ | CI separado |
 | @babel/* (dev) | 7.10 | 8.x | Babel 8 | Com CRA 5+ |
-| babel-plugin-* (Babel 6) | 6.x | — | `babel-traverse` sem patch | Remover se não usados |
+| js-yaml | 3.14.x | 4.2.0+ | `safeLoad` removido; quebra cosmiconfig 5 / CRA 3 | CRA 5+ |
 | @testing-library/react | 9.x | 16.x | Requer React 18 | Com upgrade React |
 
 ---
 
 ## Ordem recomendada de migração (Grupo B)
 
-1. Documentar `.npmrc` com `legacy-peer-deps=true`; alinhar Node CI (18 → 20 LTS).
+1. ~~Documentar `.npmrc` com `legacy-peer-deps=true`~~ — feito (lote 14); alinhar Node CI (18 → 20 LTS).
 2. Remover plugins Babel 6 não usados em `devDependencies`.
 3. Decidir: **CRA 5** (menor salto) ou **Vite** (modernização).
 4. Atualizar React 16 → 18.
@@ -119,17 +125,17 @@ Ver bloco `overrides` em `package.json` e tabela completa em `docs/SECURITY_UPDA
 |-------|-----------|
 | `npm audit fix --force` instala CRA 5 | **Nunca** usar sem aprovação |
 | Build falha no Node 17+ | `NODE_OPTIONS=--openssl-legacy-provider` |
-| Peer deps conflitam | `--legacy-peer-deps` em todo install |
+| Peer deps conflitam | `.npmrc` com `legacy-peer-deps=true` (lote 14) |
 | Sem testes automatizados | Build + smoke manual após cada lote |
 | API Rails externa | Smoke de login/signup/favoritos após mudanças |
-| 175 vulnerabilidades restantes | Maioria na árvore `react-scripts@3.4.4` |
+| 170 vulnerabilidades restantes | Maioria na árvore `react-scripts@3.4.4`; `js-yaml` exige CRA 5+ |
 
 ---
 
 ## Validação após cada lote
 
 ```powershell
-npm install --legacy-peer-deps
+npm install
 npm audit
 $env:CI='true'
 $env:NODE_OPTIONS='--openssl-legacy-provider'
@@ -143,7 +149,7 @@ Smoke manual: login, signup, listagem de cursos, favoritar.
 
 ## Próximos passos
 
-1. Avaliar **Lote 14** (override `js-yaml`, `.npmrc`).
+1. **Grupo A esgotado** — próximo passo é planejar migração toolchain (Grupo B).
 2. Smoke manual com API ativa.
 3. ~~Avaliar override `yaml`~~ — aplicado em 1.10.3 (lote 13).
 4. Planejar migração toolchain (Grupo B) em issue/PR dedicado.

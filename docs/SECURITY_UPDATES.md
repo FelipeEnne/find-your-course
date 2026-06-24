@@ -306,26 +306,42 @@ npm install react-bootstrap@1.6.8 --legacy-peer-deps
 
 **Código-fonte:** não alterado.
 
----
+### Lote 14 — `.npmrc` e tentativa `js-yaml` (2026-06-24)
 
-## Resultado dos testes
+| Ação | Resultado | Detalhe |
+|------|-----------|---------|
+| `.npmrc` com `legacy-peer-deps=true` | **Aplicado** | `npm install` funciona sem passar flag manualmente |
+| Override `js-yaml@4.2.0` | **Revertido** | Quebra build CRA 3: `yaml.safeLoad is removed in js-yaml 4` (cosmiconfig/postcss/svgo) |
+| `js-yaml` lockfile | 3.14.0 → 3.14.2 | Bump automático no reinstall; ainda listado no audit (fix exige 4.2.0+) |
+
+**Arquivos alterados:** `.npmrc` (novo), `package-lock.json`
+
+**Resultado audit após lote 14:** **170 vulnerabilidades** (8 low, 141 moderate, 16 high, 5 critical)
+
+**Build:** OK após reverter override `js-yaml`.
+
+**Código-fonte:** não alterado.
+
+**Grupo B:** `js-yaml` só corrigível com CRA 5+ (cadeia cosmiconfig atualizada).
+
+---
 
 | Comando | Resultado | Observação |
 |---------|-----------|------------|
-| `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
+| `npm install` | OK | `.npmrc` com `legacy-peer-deps=true` (lote 14) |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **175** (pós-lote 13) | Baseline era 222; −47 no total |
+| `npm audit` | **170** (pós-lote 14) | Baseline era 222; −52 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual (lote 13) | Δ |
+| Métrica | Baseline | Atual (lote 14) | Δ |
 |---------|----------|-----------------|---|
-| Total | 222 | 175 | −47 |
+| Total | 222 | 170 | −52 |
 | Critical | 20 | 5 | −15 |
 | High | 58 | 16 | −42 |
 | Moderate | 134 | 141 | +7 |
-| Low | 10 | 13 | +3 |
+| Low | 10 | 8 | −2 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
 
@@ -380,7 +396,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 3. ~~**Decidir** sobre `yarn.lock`~~ — removido; Dependabot monitora só npm.
 4. **Opcional:** `.npmrc` com `legacy-peer-deps=true`; CI com Node 16 + `npm run build`.
 5. **Longo prazo:** migração CRA 5+ / Vite + React 18 + axios 1.x (Grupo D).
-6. **Lote 14 sugerido:** override `js-yaml` (A confirmar), `.npmrc` com `legacy-peer-deps=true`.
+6. **Grupo B:** `js-yaml` (fix 4.2.0+ quebra CRA 3), migração toolchain.
 
 ---
 
