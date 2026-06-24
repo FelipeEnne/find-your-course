@@ -107,6 +107,22 @@ npm install axios@0.21.4 --legacy-peer-deps
 
 **Resultado audit após lote 5:** **200 vulnerabilidades** (3 low, 137 moderate, 44 high, 16 critical) — **−22 vs baseline**
 
+### Lote 6 — Transitivas pendentes (PRs Dependabot #17, #29, #35)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `qs` | 6.5.2 | 6.5.3 | Transitiva | PR #35; prototype pollution / DoS |
+| `lodash-es` | 4.17.15 | 4.17.21 | Transitiva | PR #29; via `react-bootstrap` / `@restart/hooks` |
+| `elliptic` | 6.5.3 | 6.5.4 | Transitiva | PR #17; patch crypto (CRA/Webpack) |
+
+**Comando:** `npm install --legacy-peer-deps`
+
+**Resultado audit após lote 6:** **201 vulnerabilidades** (3 low, 138 moderate, 42 high, 18 critical) — **−3 vs pós-lote 5** (−21 vs baseline)
+
+**PRs Dependabot que podem ser fechados após este lote:** #17, #29, #35 (além dos 17 já identificados anteriormente).
+
+**Nota:** `elliptic` ainda pode aparecer no audit — advisories recentes afetam várias versões; 6.5.4 é o máximo compatível pedido pelo Dependabot.
+
 ---
 
 ## Resultado dos testes
@@ -116,16 +132,16 @@ npm install axios@0.21.4 --legacy-peer-deps
 | `npm install --legacy-peer-deps` | OK | Lockfile migrado para `lockfileVersion` 3 pelo npm 10 |
 | `npm test` | **A confirmar** | Não há arquivos `*.test.js` no repositório |
 | `npm run build` | OK* | *Requer `NODE_OPTIONS=--openssl-legacy-provider` no Node 17+ (testado no Node 22) |
-| `npm audit` | **200** (pós-lote 5) | Baseline era 222; −22 no total |
+| `npm audit` | **201** (pós-lote 6) | Baseline era 222; −21 no total |
 
 ### Resumo do progresso
 
-| Métrica | Baseline | Atual | Δ |
-|---------|----------|-------|---|
-| Total | 222 | 200 | −22 |
-| Critical | 20 | 16 | −4 |
-| High | 58 | 44 | −14 |
-| Moderate | 134 | 137 | +3* |
+| Métrica | Baseline | Atual (lote 6) | Δ |
+|---------|----------|----------------|---|
+| Total | 222 | 201 | −21 |
+| Critical | 20 | 18 | −2 |
+| High | 58 | 42 | −16 |
+| Moderate | 134 | 138 | +4* |
 | Low | 10 | 3 | −7 |
 
 \*Variação em moderate pode refletir reclassificação do npm audit após regeneração do lockfile.
@@ -156,7 +172,7 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 | Grupo | Pacotes ainda vulneráveis | Abordagem sugerida |
 |-------|---------------------------|-------------------|
-| B — Transitivas CRA | `elliptic`, `http-proxy`, `qs`, `express`, `dns-packet`, `postcss-*`, `webpack-dev-server` | Overrides pontuais ou aceitar risco dev-only; muitos exigem CRA 5+ |
+| B — Transitivas CRA | `elliptic` (parcial), `lodash`, `postcss-*`, `webpack-dev-server`, `semver`, `form-data`, `node-forge` | Overrides pontuais ou aceitar risco dev-only; muitos exigem CRA 5+ |
 | C — Diretas | — | `react-scripts` já no último patch 3.x |
 | D — Major | `react-scripts` 5+, `axios` 1.x, React 17/18, Node CI 12→16 | Projeto separado |
 
@@ -176,11 +192,12 @@ A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, web
 
 ## Próximos passos
 
-1. **Smoke manual** de login/signup/favoritos com API ativa.
-2. **Avaliar** `elliptic`, `dns-packet`, `postcss-*` — muitos sem fix compatível com Webpack 4.
-3. **Opcional:** `.npmrc` com `legacy-peer-deps=true`.
-4. **Opcional:** alinhar CI para Node 16.x e adicionar job de `npm run build`.
-5. **Longo prazo:** migração CRA 5+ / Vite + React 18 (Grupo D).
+1. **Fechar PRs Dependabot** obsoletos (20 no total após lote 6).
+2. **Lote 7:** `lodash`, `semver`, `form-data`, `node-forge` via overrides.
+3. **Smoke manual** de login/signup/favoritos com API ativa.
+4. **Opcional:** `.npmrc` com `legacy-peer-deps=true`.
+5. **Opcional:** alinhar CI para Node 16.x e adicionar job de `npm run build`.
+6. **Longo prazo:** migração CRA 5+ / Vite + React 18 (Grupo D).
 
 ---
 

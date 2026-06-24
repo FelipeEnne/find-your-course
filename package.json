@@ -77,7 +77,10 @@
     },
     "resolve-url-loader": {
       "json5": "1.0.2"
-    }
+    },
+    "qs": "6.5.3",
+    "lodash-es": "4.17.21",
+    "elliptic": "6.5.4"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.1",
