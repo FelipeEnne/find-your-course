@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^26.1.0",
-    "postcss-selector-parser": "^7.1.0",
+    "postcss-selector-parser": "^7.1.6",
     "stylelint": "^16.19.1",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-scss": "^6.11.1",
