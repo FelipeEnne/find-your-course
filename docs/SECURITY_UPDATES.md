@@ -432,6 +432,34 @@ npm audit
 
 ---
 
+## Lote 16 — npm audit residual (2026-09-14)
+
+| Pacote | Versão anterior | Versão nova | Tipo | Motivo |
+|--------|-----------------|-------------|------|--------|
+| `colord` | 2.9.3 | 2.10.0 | Transitiva (stylelint) | GHSA-2wm5-q62r-hmrv (ReDoS) |
+| `js-yaml` | 4.3.1 | 4.3.2 | Transitiva (eslint / cosmiconfig) | GHSA-2883-xcg3-v3hh (DoS CPU) |
+| `nanoid` | 3.3.17 | 3.3.19 | Transitiva (postcss) | GHSA-2v37-7h3g-55p8 (loop infinito) |
+| `vitest` | 3.2.6 | 4.1.11 | **devDep** | GHSA-82fw-gwwq-j7x9 (path traversal via `@vitest/mocker`) |
+
+**Comando:**
+
+```bash
+npm update colord js-yaml nanoid
+npm install vitest@4.1.11 --save-dev
+```
+
+Não usar `npm audit fix --force` — instalaria Vitest 5. 3.x não recebe patch para o GHSA do mocker.
+
+**Arquivos alterados:** `package.json` (`vitest`), `package-lock.json`
+
+**Código-fonte:** não alterado (`vite.config.js` compatível com Vitest 4).
+
+**Resultado audit após lote 16:** **0** vulnerabilidades (−5 vs pré-lote 16)
+
+**Validação:** `npm run build`, `npm test -- --run` (2 arquivos, 2 testes), `npm run lint` — OK.
+
+---
+
 ```bash
 git status
 git diff package.json

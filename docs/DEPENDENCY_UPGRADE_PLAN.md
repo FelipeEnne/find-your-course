@@ -2,7 +2,7 @@
 
 Documento de referência para atualizações incrementais do frontend (Vite 6, React 18, Redux clássico).
 
-**Última atualização:** 2026-06-24  
+**Última atualização:** 2026-09-14  
 **Gerenciador:** npm (`package-lock.json`)  
 **Instalação:** `npm install`
 
@@ -19,7 +19,7 @@ Documento de referência para atualizações incrementais do frontend (Vite 6, R
 | HTTP | axios | 1.18.x |
 | CSS | bootstrap / react-bootstrap | 5.3.x / 2.10.x |
 | Lint (dev) | eslint 8 + airbnb | 8.57.x |
-| Testes | vitest + @testing-library/react | 3.x / 14.x |
+| Testes | vitest + @testing-library/react | 4.1.x / 14.x |
 
 **Node local:** 22.x (build sem `openssl-legacy-provider`)  
 **Node CI:** 20.x (`.github/workflows/linters.yml`)
@@ -28,10 +28,10 @@ Documento de referência para atualizações incrementais do frontend (Vite 6, R
 
 ## Progresso de segurança
 
-| Métrica | Baseline (início) | Pós Grupo A (lote 14) | Pós Grupo B (Vite) |
-|---------|-------------------|----------------------|---------------------|
-| Total audit | 222 | 170 | 6 |
-| Critical | 20 | 5 | 0 |
+| Métrica | Baseline (início) | Pós Grupo A (lote 14) | Pós Grupo B (Vite) | Pós lote 16 |
+|---------|-------------------|----------------------|---------------------|-------------|
+| Total audit | 222 | 170 | 6 | 0 |
+| Critical | 20 | 5 | 0 | 0 |
 
 Detalhes por lote em `docs/SECURITY_UPDATES.md`.
 
@@ -50,7 +50,7 @@ Migração toolchain executada em PR único (fases 0–5):
 | 4 | ESLint 8; Stylelint 16; CI com `npm ci`, build e test (Node 20) |
 | 5 | Bootstrap 4 → 5; react-bootstrap 1 → 2; `sr-only` → `visually-hidden` |
 
-**6 vulnerabilidades residuais** — transitivas de `react-multi-carousel` → `npm` (dev tooling embutido); não corrigível sem trocar a lib.
+**6 vulnerabilidades residuais (lote 15)** — transitivas de `react-multi-carousel` → `npm`. Encerradas no lote 16 (audit = 0).
 
 ---
 
@@ -152,7 +152,7 @@ Ver bloco `overrides` em `package.json` e tabela completa em `docs/SECURITY_UPDA
 | Peer deps conflitam | `.npmrc` `legacy-peer-deps` pode ser removido se `npm install` limpo |
 | Sem testes E2E | Build + Vitest + smoke manual após mudanças |
 | API Rails externa | Smoke de login/signup/favoritos quando API disponível |
-| 6 vulnerabilidades residuais | `react-multi-carousel` → `npm` transitivo; avaliar troca de lib |
+| 6 vulnerabilidades residuais (lote 15) | Encerradas no lote 16 (`npm audit` = 0) |
 
 ---
 
@@ -175,4 +175,4 @@ Smoke manual: login, signup, listagem de cursos, favoritar.
 1. Restaurar assets estáticos em `public/img/` (não versionados no repo).
 2. Verificar/reactivar API Rails ou documentar URL alternativa via `VITE_API_URL`.
 3. Migrar login GET → POST (coordenação com backend).
-4. Avaliar substituição de `react-multi-carousel` (6 CVEs transitivas via `npm`).
+4. Opcional: avaliar substituição de `react-multi-carousel` (UX), já sem CVEs residuais no audit.
