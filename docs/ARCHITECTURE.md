@@ -141,6 +141,6 @@ Não existe camada de serviços (`services/`) nem hooks customizados.
 - Criar componente `PrivateRoute` centralizando verificação de autenticação.
 - Unificar cliente HTTP (axios ou fetch) em um único módulo.
 - Migrar favoritos de nomes CSV para IDs de cursos.
-- Adotar autenticação com token (JWT ou sessão) em vez de credenciais na URL.
+- Adotar autenticação com token (JWT ou sessão). Login e cadastro agora enviam credenciais no corpo da requisição.
 - Considerar migração gradual para React hooks (`useSelector`, `useDispatch`) em novos componentes.
 - Documentar e versionar o contrato da API junto com o backend Rails.

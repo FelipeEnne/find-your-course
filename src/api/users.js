@@ -4,9 +4,7 @@ import url from './url';
 const userLogin = async props => {
   const { name, password } = props;
   const urlLogin = `${url}/login`;
-  const params = `name=${name}&password=${password}`;
-
-  const response = await axios.get(`${urlLogin}?${params}`);
+  const response = await axios.post(urlLogin, { name, password });
 
   return response.data;
 };
@@ -18,9 +16,13 @@ const createUser = async props => {
 
   if (password === confirmation) {
     const urlUsers = `${url}/users`;
-    const params = `name=${name}&email=${email}&password=${password}&password_confirmation=${confirmation}&favorite=${''}`;
-
-    const response = await axios.post(`${urlUsers}?${params}`);
+    const response = await axios.post(urlUsers, {
+      name,
+      email,
+      password,
+      password_confirmation: confirmation,
+      favorite: '',
+    });
     return response.data;
   }
   return null;

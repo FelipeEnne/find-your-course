@@ -365,6 +365,13 @@ Erro sem legacy provider: `error:0308010C:digital envelope routines::unsupported
 
 ---
 
+## Atualização — 2026-10-22
+
+- Login e cadastro enviam credenciais no corpo POST em vez de query strings, reduzindo exposição em logs e histórico de URLs. O backend deve aceitar `POST /login`.
+- `vite` atualizado para 6.4.5, `vitest` para 4.1.12 e `follow-redirects` fixado em 1.16.1.
+- `npm audit` após as atualizações: 5 alertas altos restantes em `stylelint@17.16.0` e sua cadeia (`micromatch`/`braces`). O advisory marca `braces <=3.0.3` e o registry não publica versão corrigida; a sugestão automática de `stylelint@7.7.0` é incompatível e rebaixaria uma major. Como Stylelint é ferramenta de desenvolvimento/CI, não substituí por uma versão antiga.
+- O audit antes das atualizações também reportava 2 moderados do Vitest e 2 altos do Vite, além de `follow-redirects`; estes foram eliminados.
+
 ## Vulnerabilidades restantes (principais)
 
 A maioria restante está na árvore de **`react-scripts@3.4.4`** (Webpack 4, webpack-dev-server, Babel, PostCSS, `elliptic`, etc.).

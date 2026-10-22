@@ -37,7 +37,7 @@ Com base nas chamadas HTTP do frontend, os models prováveis são:
 | `password_confirmation` | string | Apenas no cadastro |
 | `favorite` | string | CSV de **nomes** de cursos favoritos |
 
-**Dados sensíveis:** senhas trafegam na API. O login usa `GET /login?name=&password=` — método inseguro que pode expor credenciais em logs e histórico.
+**Dados sensíveis:** senhas trafegam na API via corpo de requisição (POST), evitando exposição em query strings, histórico e logs de URL. O backend precisa aceitar `POST /login` e ler os campos do corpo.
 
 ### Course
 
